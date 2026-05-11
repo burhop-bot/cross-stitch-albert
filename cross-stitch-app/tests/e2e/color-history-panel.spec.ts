@@ -13,6 +13,23 @@
 import { test, expect } from '../fixtures/base'
 
 test.describe('Color History Panel', () => {
+  // Helper: find the color history panel by its specific heading
+  const getPanel = (page: import('@playwright/test').Page) => {
+    return page.locator('div.rounded-lg.border')
+      .filter({ has: page.locator('h3').filter({ hasText: 'Recently Used Colors' }) })
+      .first()
+  }
+  // Helper: return swatches inside the color history panel
+  const getSwatches = (page: import('@playwright/test').Page) => {
+    const panel = getPanel(page)
+    return panel.locator('button[title^="DMC "]')
+  }
+  // Helper: return count text inside the panel
+  const getCountText = (page: import('@playwright/test').Page) => {
+    const panel = getPanel(page)
+    return panel.locator('p').filter({ hasText: /recent colors/ }).first()
+  }
+
   test.beforeEach(async ({ page }) => {
     // Clear persisted state so color history starts fresh for each test,
     // then reload so the in-memory store reinitializes from empty storage.
@@ -95,7 +112,7 @@ test.describe('Color History Panel', () => {
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
     // The swatches are buttons with titles like "DMC 15 (#XXXXXX)"
-    const firstSwatch = page.locator('button[title^="DMC 15"]').first()
+    const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
     await expect(firstSwatch).toBeVisible()
   })
 
@@ -114,7 +131,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const swatch = page.locator('button[title^="DMC 15"]').first()
+    const swatch = getSwatches(page).filter({ hasText: '15' }).first()
     const bgColor = await swatch.locator('span.absolute.inset-0').evaluate((el: HTMLElement) => el.style.backgroundColor)
     expect(bgColor).toBeTruthy()
   })
@@ -134,7 +151,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const countText = page.locator('p').filter({ hasText: /recent colors/ }).first()
+    const countText = getCountText(page)
     await expect(countText).toBeVisible()
     const text = await countText.textContent()
     expect(text).toContain('1')
@@ -159,9 +176,9 @@ test.describe('Color History Panel', () => {
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
     // Should have 2 swatches (buttons with DMC titles)
-    const swatches = page.locator('button[title^="DMC "]')
+    const swatches = getSwatches(page)
     await expect(swatches).toHaveCount(2)
-    const countText = page.locator('p').filter({ hasText: /recent colors/ }).first()
+    const countText = getCountText(page)
     const text = await countText.textContent()
     expect(text).toContain('2')
   })
@@ -183,7 +200,7 @@ test.describe('Color History Panel', () => {
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
     // First swatch should be DMC 25
-    const firstSwatch = page.locator('button[title^="DMC 25"]').first()
+    const firstSwatch = getSwatches(page).filter({ hasText: '25' }).first()
     await expect(firstSwatch).toBeVisible()
   })
 
@@ -203,12 +220,12 @@ test.describe('Color History Panel', () => {
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
     // Click the first swatch (25) — it should become active
-    await page.locator('button[title^="DMC 25"]').first().click()
+    await (getSwatches(page)).filter({ hasText: '25' }).first().click()
     await page.waitForTimeout(300)
     // Reopen and verify 25 is still first
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const firstSwatch = page.locator('button[title^="DMC 25"]').first()
+    const firstSwatch = getSwatches(page).filter({ hasText: '25' }).first()
     await expect(firstSwatch).toBeVisible()
   })
 
@@ -287,7 +304,7 @@ test.describe('Color History Panel', () => {
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
     // 15 should be first (most recently selected)
-    const firstSwatch = page.locator('button[title^="DMC 15"]').first()
+    const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
     await expect(firstSwatch).toBeVisible()
   })
 
@@ -307,7 +324,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const swatches = page.locator('button[title^="DMC "]')
+    const swatches = getSwatches(page)
     const count = await swatches.count()
     expect(count).toBeLessThanOrEqual(20)
   })
@@ -338,7 +355,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const swatches = page.locator('button[title^="DMC "]')
+    const swatches = getSwatches(page)
     await expect(swatches).toHaveCount(20)
     // First should be 33, last should NOT be 1
     const lastSwatch = swatches.last()
@@ -370,7 +387,7 @@ test.describe('Color History Panel', () => {
     // Reopen color history
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const firstSwatch = page.locator('button[title^="DMC 15"]').first()
+    const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
     await expect(firstSwatch).toBeVisible()
   })
 
@@ -390,7 +407,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const firstSwatch = page.locator('button[title^="DMC 15"]').first()
+    const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
     await expect(firstSwatch).toBeVisible()
   })
 
@@ -414,7 +431,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const countText = page.locator('p').filter({ hasText: /recent colors/ }).first()
+    const countText = getCountText(page)
     await expect(countText).toBeVisible()
   })
 
@@ -442,7 +459,7 @@ test.describe('Color History Panel', () => {
     // Reopen color history — should still show 2 entries
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const swatches = page.locator('button[title^="DMC "]')
+    const swatches = getSwatches(page)
     await expect(swatches).toHaveCount(2)
   })
 
@@ -498,7 +515,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const swatches = page.locator('button[title^="DMC "]')
+    const swatches = getSwatches(page)
     const firstSwatch = swatches.first()
     await firstSwatch.hover()
     const title = await firstSwatch.getAttribute('title')
@@ -524,7 +541,7 @@ test.describe('Color History Panel', () => {
     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const swatches = page.locator('button[title^="DMC "]')
+    const swatches = getSwatches(page)
     await expect(swatches).toHaveCount(3)
     // Close
     await page.locator('button').filter({ hasText: '✕' }).first().click()
@@ -532,13 +549,13 @@ test.describe('Color History Panel', () => {
     // Reopen and click second swatch (25)
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const secondSwatch = page.locator('button[title^="DMC 25"]').first()
+    const secondSwatch = await (getSwatches(page)).filter({ hasText: '25' }).first()
     await secondSwatch.click()
     await page.waitForTimeout(200)
     // Reopen — 25 should be first
     await btn.click()
     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
-    const newFirstSwatch = page.locator('button[title^="DMC 25"]').first()
+    const newFirstSwatch = await (getSwatches(page)).filter({ hasText: '25' }).first()
     await expect(newFirstSwatch).toBeVisible()
   })
 })
