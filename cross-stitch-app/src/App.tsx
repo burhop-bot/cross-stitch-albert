@@ -15,6 +15,13 @@ function App() {
     ;(window as any).__store = {
       getState: useProjectStore.getState,
       setState: useProjectStore.setState,
+      get state() {
+        return useProjectStore.getState()
+      },
+      // Backwards compat: direct .state access
+      get $state() {
+        return useProjectStore.getState()
+      },
     }
   }
   const { panelVisibility } = useResponsiveLayout()

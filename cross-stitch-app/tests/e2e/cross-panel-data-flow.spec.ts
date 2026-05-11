@@ -291,15 +291,20 @@ test.describe('Data integrity: save/load cycle verification', () => {
         await await new Promise(r => setTimeout(r, 300))
 
         // If a confirmation dialog appears, type CLEAR and confirm
-        const confirmInput = page.locator('input').first()
-        if (await confirmInput.count() > 0) {
-          await confirmInput.fill('CLEAR')
-          await await new Promise(r => setTimeout(r, 200))
+        const dialog = page.locator('[role="dialog"]').first()
+        const dialogVisible = await dialog.count() > 0
+        if (dialogVisible) {
+          const confirmInput = dialog.locator('input').first()
+          const inputVisible = await confirmInput.isVisible().catch(() => false)
+          if (inputVisible) {
+            await confirmInput.fill('CLEAR')
+            await await new Promise(r => setTimeout(r, 200))
 
-          const confirmBtn = page.locator('button').filter({ hasText: /CLEAR|Confirm/i }).first()
-          if (await confirmBtn.count() > 0) {
-            await confirmBtn.click()
-            await await new Promise(r => setTimeout(r, 500))
+            const confirmBtn = dialog.locator('button').filter({ hasText: /CLEAR|Confirm/i }).first()
+            if (await confirmBtn.count() > 0) {
+              await confirmBtn.click()
+              await await new Promise(r => setTimeout(r, 500))
+            }
           }
         }
       }

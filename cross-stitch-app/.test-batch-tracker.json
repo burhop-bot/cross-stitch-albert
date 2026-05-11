@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "last_run": "2026-05-11T14:56:34.615341+00:00",
-  "total_iterations": 3,
+  "last_run": "2026-05-11T18:03:31.555147+00:00",
+  "total_iterations": 4,
   "files": {
     "tests/e2e/image-conversion-undo-redo.spec.ts": {
       "attempts": 3,
@@ -10,12 +10,27 @@
       "last_error": "undo stack count off by 1"
     }
   },
-  "pending": [
-    "e2e/image-conversion-undo-redo.spec.ts"
-  ],
+  "pending": [],
   "completed": [
     "tests/e2e/app-shell.spec.ts",
-    "tests/e2e/image-conversion-undo-redo.spec.ts"
+    "tests/e2e/image-conversion-undo-redo.spec.ts",
+    "tests/e2e/store-integrity.spec.ts",
+    "tests/e2e/cross-panel-data-flow.spec.ts"
   ],
-  "stalled": []
+  "stalled": [],
+  "fixes_applied": [
+    {
+      "iteration": 4,
+      "files": [
+        "src/components/PatternRepeatPanel.tsx",
+        "src/App.tsx",
+        "tests/e2e/store-integrity.spec.ts",
+        "tests/e2e/cross-panel-data-flow.spec.ts"
+      ],
+      "description": "Pattern Repeat button text, store access, clear dialog flow",
+      "tests_fixed": 5,
+      "tests_remaining": 6,
+      "result": "5/5 targeted tests pass, 6 color-history-panel tests fail (pre-existing)"
+    }
+  ]
 }

@@ -53,10 +53,12 @@ export function PatternRepeatPanel() {
     return (
       <button
         onClick={toggle}
-        className="absolute top-2 right-2 p-2 rounded-lg bg-white border border-gray-200 shadow-sm hover:bg-gray-50 text-gray-600 transition-colors z-10"
+        className="absolute top-2 right-2 p-2 rounded-lg bg-white border border-gray-200 shadow-sm hover:bg-gray-50 text-gray-600 transition-colors z-10 flex items-center gap-1.5"
         title="Pattern Repeat"
+        aria-label="Pattern Repeat"
       >
         <Layers className="w-4 h-4" />
+        <span className="text-xs">Pattern Repeat</span>
       </button>
     )
   }

@@ -30,12 +30,22 @@ async function getGridDesign(page: any): Promise<number[][]> {
     // Primary: __testGridDesign (set by some tests/fixtures)
     if (Array.isArray(w.__testGridDesign)) return w.__testGridDesign
 
-    // Try __store.state
+    // Try __store.getState() first (Zustand)
+    if (w.__store && typeof w.__store.getState === 'function') {
+      const s = w.__store.getState()
+      if (s && Array.isArray(s.design)) return s.design
+      if (s && Array.isArray(s.panels)) {
+        for (const panel of s.panels) {
+          if (Array.isArray(panel.design)) return panel.design
+          if (panel.gridDesign && Array.isArray(panel.gridDesign)) return panel.gridDesign
+          if (panel.cells && Array.isArray(panel.cells)) return panel.cells
+        }
+      }
+    }
+    // Fallback: __store.state (object property)
     if (w.__store && w.__store.state) {
       const s = w.__store.state
       if (Array.isArray(s.design)) return s.design
-
-      // Panels array might contain design data
       if (Array.isArray(s.panels)) {
         for (const panel of s.panels) {
           if (Array.isArray(panel.design)) return panel.design
@@ -46,9 +56,9 @@ async function getGridDesign(page: any): Promise<number[][]> {
     }
 
     // Try global store patterns
-    if (w.store && w.store.state) {
-      const s = w.store.state
-      if (Array.isArray(s.design)) return s.design
+    if (w.store) {
+      const s = typeof w.store.getState === 'function' ? w.store.getState() : w.store.state
+      if (s && Array.isArray(s.design)) return s.design
     }
 
     return null
@@ -115,10 +125,15 @@ async function getActiveColor(page: any): Promise<number> {
 async function getPanels(page: any): Promise<any[]> {
   const result = await page.evaluate(() => {
     const w = window as any
-    if (w.__store && w.__store.state) {
-      const s = w.__store.state
-      if (Array.isArray(s.panels)) return s.panels
+    let state: any
+    if (w.__store && typeof w.__store.getState === 'function') {
+      state = w.__store.getState()
+    } else if (w.__store && w.__store.state !== undefined) {
+      state = w.__store.state
+    } else if (w.__store && w.__store.$state) {
+      state = w.__store.$state
     }
+    if (state && Array.isArray(state.panels)) return state.panels
     return []
   })
   return result || []
@@ -148,8 +163,23 @@ async function isGridEmpty(page: any): Promise<boolean> {
 async function getStoreState(page: any): Promise<any> {
   return page.evaluate(() => {
     const w = window as any
-    if (w.__store) return JSON.parse(JSON.stringify(w.__store.state))
-    if (w.store) return JSON.parse(JSON.stringify(w.store.state))
+    let state: any
+    if (w.__store) {
+      if (typeof w.__store.getState === 'function') {
+        state = w.__store.getState()
+      } else if (w.__store.state !== undefined) {
+        state = w.__store.state
+      } else if (w.__store.$state) {
+        state = w.__store.$state
+      }
+    }
+    if (!w.store && state) return JSON.parse(JSON.stringify(state))
+    if (w.store && typeof w.store.getState === 'function') {
+      return JSON.parse(JSON.stringify(w.store.getState()))
+    }
+    if (w.store && w.store.state !== undefined) {
+      return JSON.parse(JSON.stringify(w.store.state))
+    }
     return {}
   })
 }
