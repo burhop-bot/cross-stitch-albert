@@ -29,7 +29,7 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 30000
+        "timeout": 60000
       },
       {
         "outputDir": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results",
@@ -45,7 +45,7 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 30000
+        "timeout": 60000
       }
     ],
     "quiet": false,
@@ -82,27 +82,27 @@
   },
   "suites": [
     {
-      "title": "e2e/image-conversion-undo-redo.spec.ts",
-      "file": "e2e/image-conversion-undo-redo.spec.ts",
+      "title": "e2e/color-history-panel.spec.ts",
+      "file": "e2e/color-history-panel.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Undo after image conversion",
-          "file": "e2e/image-conversion-undo-redo.spec.ts",
-          "line": 69,
+          "title": "Color History Panel",
+          "file": "e2e/color-history-panel.spec.ts",
+          "line": 15,
           "column": 6,
           "specs": [
             {
-              "title": "[ @smoke ] undo after image conversion restores the pre-conversion grid state",
+              "title": "[ @smoke ] \"Recent\" button exists in canvas toolbar",
               "ok": true,
               "tags": [
                 "smoke"
               ],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
@@ -112,12 +112,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6684,
+                      "duration": 3529,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:46:41.664Z",
+                      "startTime": "2026-05-11T18:57:09.416Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -125,18 +125,20 @@
                   "status": "expected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-19527f72ef7882ec7ecb",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 70,
+              "id": "19a1f10afdb76781c5fe-a1d3db48bf50cb98862d",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 47,
               "column": 7
             },
             {
-              "title": "undo stack has correct entry count after conversion",
+              "title": "[ @smoke ] clicking \"Recent\" button opens the color history panel",
               "ok": true,
-              "tags": [],
+              "tags": [
+                "smoke"
+              ],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
@@ -146,12 +148,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7127,
+                      "duration": 3581,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:46:48.588Z",
+                      "startTime": "2026-05-11T18:57:13.174Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -159,18 +161,20 @@
                   "status": "expected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-42f8c7de2dc4c10dfdeb",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 107,
+              "id": "19a1f10afdb76781c5fe-ed318cd818fd523b27bc",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 52,
               "column": 7
             },
             {
-              "title": "undo after conversion does not affect manually placed stitches outside converted region",
+              "title": "[ @smoke ] color history button has hover and accessible styling",
               "ok": true,
-              "tags": [],
+              "tags": [
+                "smoke"
+              ],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
@@ -180,12 +184,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3931,
+                      "duration": 3526,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:46:55.738Z",
+                      "startTime": "2026-05-11T18:57:16.778Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -193,188 +197,18 @@
                   "status": "expected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-02155cd23e840d5aec2a",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 165,
+              "id": "19a1f10afdb76781c5fe-c716759400aeb444fe3d",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 60,
               "column": 7
             },
             {
-              "title": "undo works correctly when conversion replaces an entire grid",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "full",
-                  "projectName": "full",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 9376,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-11T16:46:59.684Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "4aff8b6fe0a30aabba98-1f468a014cc14aa3d8f6",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 199,
-              "column": 7
-            },
-            {
-              "title": "redo re-applies the last action after undo",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "full",
-                  "projectName": "full",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 4412,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-11T16:47:09.073Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "4aff8b6fe0a30aabba98-1915b1de5d4a76c67611",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 247,
-              "column": 7
-            },
-            {
-              "title": "redo is invalidated when new edits are made after undo",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "full",
-                  "projectName": "full",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 6829,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-11T16:47:13.504Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "4aff8b6fe0a30aabba98-ee4f4e597fc3c7886a76",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 283,
-              "column": 7
-            },
-            {
-              "title": "redo survives panel open/close without new edits",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "full",
-                  "projectName": "full",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 6592,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-11T16:47:20.353Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "4aff8b6fe0a30aabba98-6a346fed40a946bad131",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 324,
-              "column": 7
-            },
-            {
-              "title": "undo/redo works after switching tools during conversion flow",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "full",
-                  "projectName": "full",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 4678,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-05-11T16:47:26.963Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "4aff8b6fe0a30aabba98-a382e619e4d9aaad90be",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 370,
-              "column": 7
-            },
-            {
-              "title": "undo after two rapid conversions restores intermediate state",
+              "title": "color history shows empty state when no colors used yet",
               "ok": false,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
@@ -384,274 +218,1141 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 10227,
+                      "duration": 6946,
                       "error": {
-                        "message": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header') to be visible\u001b[22m\n",
-                        "stack": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header') to be visible\u001b[22m\n\n    at Object.page (/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts:25:16)",
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('p').filter({ hasText: /colors you click/i })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('p').filter({ hasText: /colors you click/i })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('p').filter({ hasText: /colors you click/i })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('p').filter({ hasText: /colors you click/i })\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:72:78",
                         "location": {
-                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts",
-                          "column": 16,
-                          "line": 25
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 78,
+                          "line": 72
                         },
-                        "snippet": "   at fixtures/base.ts:25\n\n  23 |   page: async ({ page }, use) => {\n  24 |     await page.goto('/')\n> 25 |     await page.waitForSelector('header', { timeout: 10000 })\n     |                ^\n  26 |     // Wait for the main header buttons to be rendered (File, Import, Share, Export)\n  27 |     await page.locator('button').filter({ hasText: 'File' }).first().waitFor({ state: 'visible', timeout: 10000 })\n  28 |     await use(page)"
+                        "snippet": "  70 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()\n  71 |     await btn.click()\n> 72 |     await expect(page.locator('p').filter({ hasText: /colors you click/i })).toBeVisible({ timeout: 3000 })\n     |                                                                              ^\n  73 |   })\n  74 |\n  75 |   test('empty state is replaced immediately on color selection', async ({ page }) => {"
                       },
                       "errors": [
                         {
                           "location": {
-                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts",
-                            "column": 16,
-                            "line": 25
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 78,
+                            "line": 72
                           },
-                          "message": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header') to be visible\u001b[22m\n\n\n   at fixtures/base.ts:25\n\n  23 |   page: async ({ page }, use) => {\n  24 |     await page.goto('/')\n> 25 |     await page.waitForSelector('header', { timeout: 10000 })\n     |                ^\n  26 |     // Wait for the main header buttons to be rendered (File, Import, Share, Export)\n  27 |     await page.locator('button').filter({ hasText: 'File' }).first().waitFor({ state: 'visible', timeout: 10000 })\n  28 |     await use(page)\n    at Object.page (/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts:25:16)"
-                        },
-                        {
-                          "message": "Error: apiRequestContext._wrapApiCall: Cannot find module '../zipBundle'\nRequire stack:\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/localUtils.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/dispatchers/localUtilsDispatcher.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/dispatchers/playwrightDispatcher.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/index.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/remote/playwrightConnection.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/remote/playwrightServer.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/androidServerImpl.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/inProcessFactory.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/inprocess.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/index.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/testType.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/test.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/testLoader.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/worker/workerMain.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/process.js"
-                        },
-                        {
-                          "message": "Error: Cannot find package 'playwright-core' imported from /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/worker/testTracing.js"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('p').filter({ hasText: /colors you click/i })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('p').filter({ hasText: /colors you click/i })\u001b[22m\n\n\n  70 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()\n  71 |     await btn.click()\n> 72 |     await expect(page.locator('p').filter({ hasText: /colors you click/i })).toBeVisible({ timeout: 3000 })\n     |                                                                              ^\n  73 |   })\n  74 |\n  75 |   test('empty state is replaced immediately on color selection', async ({ page }) => {\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:72:78"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:31.661Z",
+                      "startTime": "2026-05-11T18:57:20.320Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-image-conversion-undo--948d4-restores-intermediate-state-full/test-failed-1.png"
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-1b371-ate-when-no-colors-used-yet-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-1b371-ate-when-no-colors-used-yet-full/video.webm"
                         },
                         {
                           "name": "error-context",
                           "contentType": "text/markdown",
-                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-image-conversion-undo--948d4-restores-intermediate-state-full/error-context.md"
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-1b371-ate-when-no-colors-used-yet-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-1b371-ate-when-no-colors-used-yet-full/trace.zip"
                         }
                       ],
                       "errorLocation": {
-                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts",
-                        "column": 16,
-                        "line": 25
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 78,
+                        "line": 72
                       }
                     }
                   ],
                   "status": "unexpected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-797f7d4b39db51e59d8b",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 403,
+              "id": "19a1f10afdb76781c5fe-8c1105cf62edb14a3230",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 69,
               "column": 7
             },
             {
-              "title": "undo works while conversion panel is open",
-              "ok": false,
+              "title": "empty state is replaced immediately on color selection",
+              "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
                   "projectName": "full",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4454,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:57:28.232Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-365b1ab338085e7e6229",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "selected color swatch shows correct DMC number label",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4512,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:57:32.896Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-10750c71d2f2423bf192",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "swatch background color matches the selected palette color",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4451,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:57:37.424Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-cc4351838c91e1c3c975",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 119,
+              "column": 7
+            },
+            {
+              "title": "color history count text shows correct number",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
                       "status": "failed",
-                      "duration": 0,
+                      "duration": 4742,
                       "error": {
-                        "message": "Error: worker process exited unexpectedly (code=1, signal=null)"
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"1\"\u001b[39m\nReceived string:    \u001b[31m\"2 recent colors\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"1\"\u001b[39m\nReceived string:    \u001b[31m\"2 recent colors\"\u001b[39m\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:157:18",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 18,
+                          "line": 157
+                        },
+                        "snippet": "  155 |     await expect(countText).toBeVisible()\n  156 |     const text = await countText.textContent()\n> 157 |     expect(text).toContain('1')\n      |                  ^\n  158 |   })\n  159 |\n  160 |   // --- Populating history ---"
                       },
                       "errors": [
                         {
-                          "message": "Error: worker process exited unexpectedly (code=1, signal=null)"
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 18,
+                            "line": 157
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"1\"\u001b[39m\nReceived string:    \u001b[31m\"2 recent colors\"\u001b[39m\n\n  155 |     await expect(countText).toBeVisible()\n  156 |     const text = await countText.textContent()\n> 157 |     expect(text).toContain('1')\n      |                  ^\n  158 |   })\n  159 |\n  160 |   // --- Populating history ---\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:157:18"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:42.111Z",
+                      "startTime": "2026-05-11T18:57:41.890Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e331d-t-text-shows-correct-number-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e331d-t-text-shows-correct-number-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e331d-t-text-shows-correct-number-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e331d-t-text-shows-correct-number-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 18,
+                        "line": 157
+                      }
                     }
                   ],
                   "status": "unexpected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-0dd76d02d77aa84994e8",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 451,
+              "id": "19a1f10afdb76781c5fe-dd3ce1f6e278bbb136d9",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 139,
               "column": 7
             },
             {
-              "title": "undo/redo with notes survives conversion panel interaction",
-              "ok": true,
+              "title": "multiple color selections add multiple swatches to history",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
                   "projectName": "full",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12522,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m4\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\u001b[22m\n\u001b[2m    9 × locator resolved to 4 elements\u001b[22m\n\u001b[2m      - unexpected value \"4\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m4\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\u001b[22m\n\u001b[2m    9 × locator resolved to 4 elements\u001b[22m\n\u001b[2m      - unexpected value \"4\"\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:180:28",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 28,
+                          "line": 180
+                        },
+                        "snippet": "  178 |     // Should have 2 swatches (buttons with DMC titles)\n  179 |     const swatches = getSwatches(page)\n> 180 |     await expect(swatches).toHaveCount(2)\n      |                            ^\n  181 |     const countText = getCountText(page)\n  182 |     const text = await countText.textContent()\n  183 |     expect(text).toContain('2')"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 28,
+                            "line": 180
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m4\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\u001b[22m\n\u001b[2m    9 × locator resolved to 4 elements\u001b[22m\n\u001b[2m      - unexpected value \"4\"\u001b[22m\n\n\n  178 |     // Should have 2 swatches (buttons with DMC titles)\n  179 |     const swatches = getSwatches(page)\n> 180 |     await expect(swatches).toHaveCount(2)\n      |                            ^\n  181 |     const countText = getCountText(page)\n  182 |     const text = await countText.textContent()\n  183 |     expect(text).toContain('2')\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:180:28"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:42.111Z",
+                      "startTime": "2026-05-11T18:57:47.559Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5276c-ultiple-swatches-to-history-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5276c-ultiple-swatches-to-history-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5276c-ultiple-swatches-to-history-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5276c-ultiple-swatches-to-history-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 28,
+                        "line": 180
+                      }
                     }
                   ],
-                  "status": "skipped"
+                  "status": "unexpected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-a59ee18e408391c751e5",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 497,
+              "id": "19a1f10afdb76781c5fe-851dbe50897a011baaa9",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 162,
               "column": 7
             },
             {
-              "title": "undo after dimension change following conversion restores original dimensions",
+              "title": "most recently selected color appears first in history",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
                   "projectName": "full",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6479,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "startTime": "2026-05-11T18:58:01.540Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "skipped"
+                  "status": "expected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-5e12fe22a8f7e016a2a9",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 557,
+              "id": "19a1f10afdb76781c5fe-495d3ea630e263cb6627",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 186,
               "column": 7
             },
             {
-              "title": "undo stack remains consistent after conversion panel open→close→edit cycle",
-              "ok": true,
+              "title": "clicking a color in history sets it as active",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
                   "projectName": "full",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11322,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:227:82",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 82,
+                          "line": 227
+                        },
+                        "snippet": "  225 |     // Reopen and verify 25 is still first\n  226 |     await btn.click()\n> 227 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n      |                                                                                  ^\n  228 |     const firstSwatch = getSwatches(page).filter({ hasText: '25' }).first()\n  229 |     await expect(firstSwatch).toBeVisible()\n  230 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 82,
+                            "line": 227
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\n\n  225 |     // Reopen and verify 25 is still first\n  226 |     await btn.click()\n> 227 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n      |                                                                                  ^\n  228 |     const firstSwatch = getSwatches(page).filter({ hasText: '25' }).first()\n  229 |     await expect(firstSwatch).toBeVisible()\n  230 |   })\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:227:82"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "startTime": "2026-05-11T18:58:08.263Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e0bd7-n-history-sets-it-as-active-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e0bd7-n-history-sets-it-as-active-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e0bd7-n-history-sets-it-as-active-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-e0bd7-n-history-sets-it-as-active-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 82,
+                        "line": 227
+                      }
                     }
                   ],
-                  "status": "skipped"
+                  "status": "unexpected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-0d84c255cfc581e05afc",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 613,
+              "id": "19a1f10afdb76781c5fe-ae43c222f9365472384f",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 207,
               "column": 7
             },
             {
-              "title": "canceling conversion does not push an entry to undo stack",
+              "title": "close button (✕) hides the color history panel",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
                   "projectName": "full",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4963,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "startTime": "2026-05-11T18:58:20.845Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "skipped"
+                  "status": "expected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-7a0a04436b35e6066719",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 669,
+              "id": "19a1f10afdb76781c5fe-c84b8d6aec36d8285986",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 234,
               "column": 7
             },
             {
-              "title": "undo after conversion flow preserves grid data integrity",
-              "ok": true,
+              "title": "clicking outside the panel closes it",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "full",
                   "projectName": "full",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10806,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\u001b[2m    9 × locator resolved to 1 element\u001b[22m\n\u001b[2m      - unexpected value \"1\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\u001b[2m    9 × locator resolved to 1 element\u001b[22m\n\u001b[2m      - unexpected value \"1\"\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:263:82",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 82,
+                          "line": 263
+                        },
+                        "snippet": "  261 |     await page.locator('main').first().click()\n  262 |     await page.waitForTimeout(300)\n> 263 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toHaveCount(0)\n      |                                                                                  ^\n  264 |   })\n  265 |\n  266 |   test('reopening \"Recent\" button shows the panel again', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 82,
+                            "line": 263
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\u001b[2m    9 × locator resolved to 1 element\u001b[22m\n\u001b[2m      - unexpected value \"1\"\u001b[22m\n\n\n  261 |     await page.locator('main').first().click()\n  262 |     await page.waitForTimeout(300)\n> 263 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toHaveCount(0)\n      |                                                                                  ^\n  264 |   })\n  265 |\n  266 |   test('reopening \"Recent\" button shows the panel again', async ({ page }) => {\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:263:82"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:58:26.019Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-18a20-outside-the-panel-closes-it-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-18a20-outside-the-panel-closes-it-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-18a20-outside-the-panel-closes-it-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-18a20-outside-the-panel-closes-it-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 82,
+                        "line": 263
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-29b429fd4b796d8457d6",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 250,
+              "column": 7
+            },
+            {
+              "title": "reopening \"Recent\" button shows the panel again",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5444,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "startTime": "2026-05-11T18:58:38.095Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "skipped"
+                  "status": "expected"
                 }
               ],
-              "id": "4aff8b6fe0a30aabba98-83445d4f7cefcd476d2c",
-              "file": "e2e/image-conversion-undo-redo.spec.ts",
-              "line": 709,
+              "id": "19a1f10afdb76781c5fe-5f32196c16bea2d8697a",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 266,
+              "column": 7
+            },
+            {
+              "title": "re-selecting a color moves it to the front",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8044,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:58:43.737Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-b048e63fa98d49ff69fb",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 286,
+              "column": 7
+            },
+            {
+              "title": "history preserves maximum 20 entries",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 56058,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:58:51.807Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-18e3174adc5967604c6a",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 311,
+              "column": 7
+            },
+            {
+              "title": "oldest entry is evicted when history exceeds 20",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 39584,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T18:59:47.891Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-08530ab8c2b8940d8ccd",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 332,
+              "column": 7
+            },
+            {
+              "title": "color history survives right panel tab switching",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9361,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:389:82",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 82,
+                          "line": 389
+                        },
+                        "snippet": "  387 |     // Reopen color history\n  388 |     await btn.click()\n> 389 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n      |                                                                                  ^\n  390 |     const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()\n  391 |     await expect(firstSwatch).toBeVisible()\n  392 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 82,
+                            "line": 389
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\n\n  387 |     // Reopen color history\n  388 |     await btn.click()\n> 389 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n      |                                                                                  ^\n  390 |     const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()\n  391 |     await expect(firstSwatch).toBeVisible()\n  392 |   })\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:389:82"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:00:27.497Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-204b7-s-right-panel-tab-switching-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-204b7-s-right-panel-tab-switching-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-204b7-s-right-panel-tab-switching-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-204b7-s-right-panel-tab-switching-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 82,
+                        "line": 389
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-cf2f8cbb528f671319bf",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 368,
+              "column": 7
+            },
+            {
+              "title": "placing a stitch adds the color to history automatically",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4908,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:00:37.679Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-54fc8d7e4016da848725",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 394,
+              "column": 7
+            },
+            {
+              "title": "color history swatches show correct hex for non-DMC brands",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5525,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:00:42.798Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-d346a4ad50f520024be4",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 416,
+              "column": 7
+            },
+            {
+              "title": "color history remains after tool switching",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9980,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:461:82",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 82,
+                          "line": 461
+                        },
+                        "snippet": "  459 |     // Reopen color history — should still show 2 entries\n  460 |     await btn.click()\n> 461 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n      |                                                                                  ^\n  462 |     const swatches = getSwatches(page)\n  463 |     await expect(swatches).toHaveCount(2)\n  464 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 82,
+                            "line": 461
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h3').filter({ hasText: 'Recently Used Colors' })\nExpected: visible\nTimeout: 3000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 3000ms\u001b[22m\n\u001b[2m  - waiting for locator('h3').filter({ hasText: 'Recently Used Colors' })\u001b[22m\n\n\n  459 |     // Reopen color history — should still show 2 entries\n  460 |     await btn.click()\n> 461 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n      |                                                                                  ^\n  462 |     const swatches = getSwatches(page)\n  463 |     await expect(swatches).toHaveCount(2)\n  464 |   })\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:461:82"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:00:48.342Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5a6a0-emains-after-tool-switching-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5a6a0-emains-after-tool-switching-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5a6a0-emains-after-tool-switching-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-5a6a0-emains-after-tool-switching-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 82,
+                        "line": 461
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-87e88cb2ed42f240937e",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 440,
+              "column": 7
+            },
+            {
+              "title": "rapid open/close cycles do not crash the panel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11567,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:00:59.248Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-925345b079b13f4c4fdd",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 468,
+              "column": 7
+            },
+            {
+              "title": "color history panel does not overlap other UI elements inappropriately",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4359,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:01:10.992Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-2c80071a872117796109",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 487,
+              "column": 7
+            },
+            {
+              "title": "swatch hover tooltip shows DMC number and hex color",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4599,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"15\"\u001b[39m\nReceived string:    \u001b[31m\"DMC 12 (#FFFACD)\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"15\"\u001b[39m\nReceived string:    \u001b[31m\"DMC 12 (#FFFACD)\"\u001b[39m\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:523:20",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 20,
+                          "line": 523
+                        },
+                        "snippet": "  521 |     const title = await firstSwatch.getAttribute('title')\n  522 |     expect(title).toBeTruthy()\n> 523 |     expect(title!).toContain('15')\n      |                    ^\n  524 |   })\n  525 |\n  526 |   // --- Full workflow ---"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 20,
+                            "line": 523
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"15\"\u001b[39m\nReceived string:    \u001b[31m\"DMC 12 (#FFFACD)\"\u001b[39m\n\n  521 |     const title = await firstSwatch.getAttribute('title')\n  522 |     expect(title).toBeTruthy()\n> 523 |     expect(title!).toContain('15')\n      |                    ^\n  524 |   })\n  525 |\n  526 |   // --- Full workflow ---\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:523:20"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:01:15.367Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-092fe-ws-DMC-number-and-hex-color-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-092fe-ws-DMC-number-and-hex-color-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-092fe-ws-DMC-number-and-hex-color-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-092fe-ws-DMC-number-and-hex-color-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 20,
+                        "line": 523
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-651aed3cd5a5db6e2f6a",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 508,
+              "column": 7
+            },
+            {
+              "title": "full workflow: select colors → view history → select from history → use in editing",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 14462,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\nExpected: \u001b[32m3\u001b[39m\nReceived: \u001b[31m6\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\u001b[22m\n\u001b[2m    9 × locator resolved to 6 elements\u001b[22m\n\u001b[2m      - unexpected value \"6\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\nExpected: \u001b[32m3\u001b[39m\nReceived: \u001b[31m6\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\u001b[22m\n\u001b[2m    9 × locator resolved to 6 elements\u001b[22m\n\u001b[2m      - unexpected value \"6\"\u001b[22m\n\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:545:28",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                          "column": 28,
+                          "line": 545
+                        },
+                        "snippet": "  543 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n  544 |     const swatches = getSwatches(page)\n> 545 |     await expect(swatches).toHaveCount(3)\n      |                            ^\n  546 |     // Close\n  547 |     await page.locator('button').filter({ hasText: '✕' }).first().click()\n  548 |     await page.waitForTimeout(200)"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                            "column": 28,
+                            "line": 545
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\nExpected: \u001b[32m3\u001b[39m\nReceived: \u001b[31m6\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('div.rounded-lg.border').filter({ has: locator('h3').filter({ hasText: 'Recently Used Colors' }) }).first().locator('button[title^=\"DMC \"]')\u001b[22m\n\u001b[2m    9 × locator resolved to 6 elements\u001b[22m\n\u001b[2m      - unexpected value \"6\"\u001b[22m\n\n\n  543 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })\n  544 |     const swatches = getSwatches(page)\n> 545 |     await expect(swatches).toHaveCount(3)\n      |                            ^\n  546 |     // Close\n  547 |     await page.locator('button').filter({ hasText: '✕' }).first().click()\n  548 |     await page.waitForTimeout(200)\n    at /sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts:545:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T19:01:20.877Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-57439-om-history-→-use-in-editing-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-57439-om-history-→-use-in-editing-full/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-57439-om-history-→-use-in-editing-full/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-color-history-panel-Co-57439-om-history-→-use-in-editing-full/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/e2e/color-history-panel.spec.ts",
+                        "column": 28,
+                        "line": 545
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a1f10afdb76781c5fe-7506d9d9185578eafba0",
+              "file": "e2e/color-history-panel.spec.ts",
+              "line": 528,
               "column": 7
             }
           ]
@@ -661,11 +1362,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-11T16:46:40.669Z",
-    "duration": 61446.185000000005,
-    "expected": 8,
-    "skipped": 5,
-    "unexpected": 2,
+    "startTime": "2026-05-11T18:57:08.321Z",
+    "duration": 267445.67199999996,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 9,
     "flaky": 0
   }
 }
