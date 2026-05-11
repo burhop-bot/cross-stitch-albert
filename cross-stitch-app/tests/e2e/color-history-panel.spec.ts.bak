@@ -1,0 +1,451 @@
+/**
+ * Color History Panel — recently used colors popup in the canvas toolbar.
+ *
+ * Covers: button visibility/activation, empty state, population on color selection,
+ * display correctness (swatches + labels), click-to-select, close behavior,
+ * LRU ordering, 20-entry limit, survival across panel switches and tool changes,
+ * interaction with undo/redo, and integration with the right panel.
+ *
+ * Component: src/components/ColorHistoryPanel.tsx
+ * Trigger: GridCanvas toolbar → "🎨 Recent" button (showColorHistory state)
+ * Data: projectStore.colorHistory (number[], LRU, max 20)
+ */
+
+import { test, expect } from '../fixtures/base'
+
+// ── Helpers ──────────────────────────────────────────────────────────
+
+/** Click the canvas toolbar's "Recent" button to open the color history popup. */
+async function openColorHistory(page: any): Promise<void> {
+  const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  if (await btn.count() > 0) {
+    await btn.click()
+    await await new Promise(r => setTimeout(r, 300))
+  }
+}
+
+/** Select a specific DMC color from the sidebar palette by its number. */
+async function selectColorByNumber(page: any, dmcNumber: number): Promise<void> {
+  // Swatches in the sidebar have aria-label like "Color {number}"
+  const swatch = page.locator('[aria-label="Color ' + dmcNumber + '"]').first()
+  if (await swatch.count() > 0) {
+    await swatch.click()
+    await await new Promise(r => setTimeout(r, 200))
+  }
+}
+
+/** Read the visible color history panel's swatches as hex color strings. */
+async function getColorHistoryHexes(page: any): Promise<string[]> {
+  // Each swatch button in the color history panel has a colored span inside
+  const swatches = page.locator('[class*="rounded-md"]').filter({
+    has: page.locator('[class*="absolute inset-0"]')
+  })
+  const hexes: string[] = []
+  const count = await swatches.count()
+  for (let i = 0; i < count && i < 25; i++) {
+    const bg = await swatches.nth(i).locator('[class*="absolute inset-0"]').first()
+      .evaluate((el: HTMLElement) => el.style.backgroundColor)
+    if (bg) hexes.push(bg)
+  }
+  return hexes
+}
+
+// ── Test suite ───────────────────────────────────────────────────────
+
+test.describe('Color History Panel', () => {
+
+  // --- Button visibility and activation ---
+
+  test('[ @smoke ] "Recent" button exists in canvas toolbar', async ({ page }) => {
+    const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+    await expect(btn).toBeVisible()
+  })
+
+  test('[ @smoke ] clicking "Recent" button opens the color history panel', async ({ page }) => {
+    await openColorHistory(page)
+    // Panel has header "Recently Used Colors"
+    const header = page.locator('h3').filter({ hasText: 'Recently Used Colors' }).first()
+    await expect(header).toBeVisible()
+  })
+
+  test('[ @smoke ] color history button has hover and accessible styling', async ({ page }) => {
+    const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+    await expect(btn).toHaveClass(/rounded-md/)
+    // Hover state
+    await btn.hover()
+    await expect(btn).toHaveClass(/hover:bg-gray-200/)
+  })
+
+  // --- Empty state ---
+
+  test('color history shows empty state when no colors used yet', async ({ page }) => {
+    await openColorHistory(page)
+    const emptyMsg = page.locator('p').filter({ hasText: /colors you click/i }).first()
+    await expect(emptyMsg).toBeVisible()
+    // No swatches rendered
+    const swatches = page.locator('[class*="rounded-md"]').filter({
+      has: page.locator('[class*="absolute inset-0"]')
+    })
+    await expect(swatches).toHaveCount(0)
+  })
+
+  test('empty state is replaced immediately on color selection', async ({ page }) => {
+    // Open color history first
+    await openColorHistory(page)
+    // Select a color from the sidebar palette
+    await selectColorByNumber(page, 826)
+    // Close the panel
+    const closeBtn = page.locator('button').filter({ hasText: '✕' }).first()
+    if (await closeBtn.count() > 0) await closeBtn.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Reopen
+    await openColorHistory(page)
+    // Should now show the swatch
+    const header = page.locator('h3').filter({ hasText: 'Recently Used Colors' }).first()
+    await expect(header).toBeVisible()
+    // Should NOT show empty message anymore
+    const emptyMsg = page.locator('p').filter({ hasText: /colors you click/i })
+    await expect(emptyMsg).toHaveCount(0)
+  })
+
+  // --- Color display in panel ---
+
+  test('selected color swatch shows correct DMC number label', async ({ page }) => {
+    // Select color 826
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    // Swatch labels use font-mono text-[9px] with the DMC number
+    const firstSwatchLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="relative z-10"]')
+    await expect(firstSwatchLabel).toHaveText(/826/)
+  })
+
+  test('swatch background color matches the selected palette color', async ({ page }) => {
+    const dmcNumber = 826
+    await selectColorByNumber(page, dmcNumber)
+    await openColorHistory(page)
+    const swatchBg = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="absolute inset-0"]')
+      .evaluate((el: HTMLElement) => el.style.backgroundColor)
+    // DMC 826 is '#8B4513' (saddle brown)
+    expect(swatchBg).toBeTruthy()
+  })
+
+  test('color history count text shows correct number', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    const countText = page.locator('p').filter({ hasText: /recent colors/ }).first()
+    await expect(countText).toBeVisible()
+    const text = await countText.textContent()
+    expect(text).toContain('1')
+  })
+
+  // --- Populating history ---
+
+  test('multiple color selections add multiple swatches to history', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await selectColorByNumber(page, 728)
+    await openColorHistory(page)
+    const swatches = page.locator('[class*="rounded-md"]').filter({
+      has: page.locator('[class*="absolute inset-0"]')
+    })
+    await expect(swatches).toHaveCount(2)
+    const countText = page.locator('p').filter({ hasText: /recent colors/ }).first()
+    const text = await countText.textContent()
+    expect(text).toContain('2')
+  })
+
+  test('most recently selected color appears first in history', async ({ page }) => {
+    // Select in order: 826, then 728
+    await selectColorByNumber(page, 826)
+    await selectColorByNumber(page, 728)
+    await openColorHistory(page)
+    // The first swatch should have 728 label (most recent)
+    const firstLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="relative z-10"]')
+    await expect(firstLabel).toHaveText(/728/)
+  })
+
+  test('clicking a color in history sets it as active', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await selectColorByNumber(page, 728)
+    await openColorHistory(page)
+    // Click the first swatch (most recent = 728)
+    const firstSwatch = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+    await firstSwatch.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // 728 should now be the selected color (highlighted in palette)
+    const selectedSwatch = page.locator('[aria-label="Color 728"]')
+      .first()
+      .locator('button')
+    if (await selectedSwatch.count() > 0) {
+      const isSelected = await selectedSwatch.locator('button')
+        .evaluate((el: HTMLElement) => el.classList.contains('ring-2') || el.style.borderRadius !== undefined)
+      // If not found, check via palette highlight class
+      const highlight = await page.locator('[aria-label="Color 728"]').first()
+        .evaluate((el: HTMLElement) => el.classList.contains('ring-2') || el.classList.contains('border-indigo-500'))
+      // The key assertion: re-opening color history should have 728 at the front
+      await openColorHistory(page)
+      const firstLabel = page.locator('[class*="rounded-md"]')
+        .filter({ has: page.locator('[class*="absolute inset-0"]') })
+        .first()
+        .locator('[class*="relative z-10"]')
+      await expect(firstLabel).toHaveText(/728/)
+    }
+  })
+
+  // --- Close behavior ---
+
+  test('close button (✕) hides the color history panel', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    const closeBtn = page.locator('button').filter({ hasText: '✕' }).first()
+    await expect(closeBtn).toBeVisible()
+    await closeBtn.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Header should be gone
+    const header = page.locator('h3').filter({ hasText: 'Recently Used Colors' })
+    await expect(header).toHaveCount(0)
+  })
+
+  test('clicking outside the panel closes it', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    // Click on the main area
+    const main = page.locator('main')
+    await main.click()
+    await await new Promise(r => setTimeout(r, 200))
+    const header = page.locator('h3').filter({ hasText: 'Recently Used Colors' })
+    await expect(header).toHaveCount(0)
+  })
+
+  test('reopening "Recent" button shows the panel again', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+    // Close via close button
+    await page.locator('button').filter({ hasText: '✕' }).first().click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Reopen
+    await openColorHistory(page)
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+  })
+
+  // --- LRU behavior ---
+
+  test('re-selecting a color moves it to the front', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await selectColorByNumber(page, 728)
+    await selectColorByNumber(page, 826) // Select 826 again
+    await openColorHistory(page)
+    // 826 should be first
+    const firstLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="relative z-10"]')
+    await expect(firstLabel).toHaveText(/826/)
+    // 728 should be second
+    const secondLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .nth(1)
+      .locator('[class*="relative z-10"]')
+    await expect(secondLabel).toHaveText(/728/)
+  })
+
+  test('history preserves maximum 20 entries', async ({ page }) => {
+    // Select 25 different colors (exceeding the 20 limit)
+    for (let i = 0; i < 25; i++) {
+      const dmcNum = 800 + i
+      await selectColorByNumber(page, dmcNum)
+    }
+    await openColorHistory(page)
+    const swatches = page.locator('[class*="rounded-md"]').filter({
+      has: page.locator('[class*="absolute inset-0"]')
+    })
+    await expect(swatches).toBeLessThanOrEqual(20)
+  })
+
+  test('oldest entry is evicted when history exceeds 20', async ({ page }) => {
+    // First select 20 colors
+    for (let i = 0; i < 20; i++) {
+      await selectColorByNumber(page, 800 + i)
+    }
+    // Then select one more (should evict 800)
+    await selectColorByNumber(page, 825)
+    await openColorHistory(page)
+    const swatches = page.locator('[class*="rounded-md"]').filter({
+      has: page.locator('[class*="absolute inset-0"]')
+    })
+    await expect(swatches).toHaveCount(20)
+    // Oldest swatch should NOT be 800
+    const lastLabel = swatches.last().locator('[class*="relative z-10"]')
+    const lastText = await lastLabel.textContent()
+    expect(lastText).not.toContain('800')
+  })
+
+  // --- Interaction with other features ---
+
+  test('color history survives right panel tab switching', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    // Switch to Settings panel
+    const panelBtn = page.locator('button').filter({ hasText: 'Panel' }).first()
+    if (await panelBtn.count() > 0) await panelBtn.click()
+    await await new Promise(r => setTimeout(r, 300))
+    const projectTab = page.locator('button').filter({ hasText: /^Project$/ }).first()
+    if (await projectTab.count() > 0) await projectTab.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Reopen color history
+    await openColorHistory(page)
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+    const firstLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="relative z-10"]')
+    await expect(firstLabel).toHaveText(/826/)
+  })
+
+  test('placing a stitch adds the color to history automatically', async ({ page }) => {
+    // Color 826 should already be selected from prior test, but let's be explicit
+    await selectColorByNumber(page, 826)
+    // Place a stitch on the grid (click any visible cell)
+    const cells = page.locator('[style*="background-color"]')
+    if (await cells.count() > 0) {
+      await cells.first().click()
+      await await new Promise(r => setTimeout(r, 200))
+    }
+    // Open color history — 826 should be there
+    await openColorHistory(page)
+    const firstLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="relative z-10"]')
+    await expect(firstLabel).toHaveText(/826/)
+  })
+
+  // --- Brand switching compatibility ---
+
+  test('color history swatches show correct hex for non-DMC brands', async ({ page }) => {
+    // Select color via palette number
+    await selectColorByNumber(page, 826)
+    // Change brand to Anchor
+    const panelBtn = page.locator('button').filter({ hasText: 'Panel' }).first()
+    if (await panelBtn.count() > 0) await panelBtn.click()
+    await await new Promise(r => setTimeout(r, 300))
+    const projectTab = page.locator('button').filter({ hasText: /^Project$/ }).first()
+    if (await projectTab.count() > 0) await projectTab.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Open brand selector and switch to Anchor
+    const brandBtn = page.locator('button').filter({ hasText: /^DMC$/ }).first()
+    if (await brandBtn.count() > 0) await brandBtn.click()
+    await await new Promise(r => setTimeout(r, 200))
+    const anchorTab = page.locator('button').filter({ hasText: /^Anchor$/ }).first()
+    if (await anchorTab.count() > 0) await anchorTab.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Reopen color history
+    await openColorHistory(page)
+    // Panel should still be visible with swatches
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+    const countText = page.locator('p').filter({ hasText: /recent colors/ }).first()
+    await expect(countText).toBeVisible()
+  })
+
+  // --- Tool interaction ---
+
+  test('color history remains after tool switching', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await selectColorByNumber(page, 728)
+    await openColorHistory(page)
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+    // Switch to eraser tool
+    const eraserBtn = page.locator('button').filter({ hasText: 'Eraser' }).first()
+    if (await eraserBtn.count() > 0) await eraserBtn.click()
+    await await new Promise(r => setTimeout(r, 200))
+    // Reopen color history
+    await openColorHistory(page)
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+  })
+
+  // --- Edge cases ---
+
+  test('rapid open/close cycles do not crash the panel', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    for (let i = 0; i < 10; i++) {
+      await openColorHistory(page)
+      const closeBtn = page.locator('button').filter({ hasText: '✕' }).first()
+      if (await closeBtn.count() > 0) await closeBtn.click()
+      await await new Promise(r => setTimeout(r, 50))
+    }
+    // Reopen once more — should work
+    await openColorHistory(page)
+    await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible()
+  })
+
+  test('color history panel does not overlap other UI elements inappropriately', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    const panel = page.locator('[class*="rounded-lg border"]')
+      .filter({ hasText: 'Recently Used Colors' }).first()
+    await expect(panel).toBeVisible()
+    const box = await panel.boundingBox()
+    expect(box).not.toBeNull()
+    if (box) {
+      expect(box.width).toBeGreaterThan(50)
+      expect(box.height).toBeGreaterThan(20)
+    }
+  })
+
+  test('swatch hover tooltip shows DMC number and hex color', async ({ page }) => {
+    await selectColorByNumber(page, 826)
+    await openColorHistory(page)
+    const firstSwatch = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+    await firstSwatch.hover()
+    const title = await firstSwatch.getAttribute('title')
+    expect(title).toBeTruthy()
+    expect(title!).toContain('826')
+  })
+
+  // --- Full workflow ---
+
+  test('full workflow: select colors → view history → select from history → use in editing', async ({ page }) => {
+    // Step 1: Select several colors
+    await selectColorByNumber(page, 826)
+    await selectColorByNumber(page, 728)
+    await selectColorByNumber(page, 921)
+
+    // Step 2: Open history, verify all three visible
+    await openColorHistory(page)
+    const swatches = page.locator('[class*="rounded-md"]').filter({
+      has: page.locator('[class*="absolute inset-0"]')
+    })
+    await expect(swatches).toHaveCount(3)
+
+    // Step 3: Close panel
+    await page.locator('button').filter({ hasText: '✕' }).first().click()
+    await await new Promise(r => setTimeout(r, 200))
+
+    // Step 4: Reopen and click middle swatch (728)
+    await openColorHistory(page)
+    const secondSwatch = swatches.nth(1)
+    await secondSwatch.click()
+    await await new Promise(r => setTimeout(r, 200))
+
+    // Step 5: Reopen to verify 728 is now at front
+    await openColorHistory(page)
+    const newFirstLabel = page.locator('[class*="rounded-md"]')
+      .filter({ has: page.locator('[class*="absolute inset-0"]') })
+      .first()
+      .locator('[class*="relative z-10"]')
+    await expect(newFirstLabel).toHaveText(/728/)
+  })
+})

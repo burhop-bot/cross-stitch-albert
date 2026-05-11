@@ -1,0 +1,17 @@
+{
+    "jobId": "loom-test-fix",
+    "description": "Run industrialized Loom agent for E2E test fixing",
+    "schedule": "0 */2 * * *",
+    "command": "bash /sandbox/.openclaw-data/workspace/cross-stitch-app/loom-runner.sh",
+    "timeoutSeconds": 600,
+    "maxRetries": 2,
+    "notification": {
+        "channel": "exec-event",
+        "onSuccess": true,
+        "onFailure": true
+    },
+    "environment": {
+        "NODE_ENV": "production",
+        "LOOM_PROJECT_DIR": "/sandbox/.openclaw-data/workspace/cross-stitch-app"
+    }
+}

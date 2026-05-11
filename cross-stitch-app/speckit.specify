@@ -1,0 +1,49 @@
+# Project: Cross-Stitch Pattern Studio
+
+## Overview
+A comprehensive web application designed for creating, editing, and managing cross-stitch patterns. The goal is to provide a high-quality, DIY alternative to purchased patterns, allowing users to convert images to charts, design original motifs, and manage their thread library.
+
+## Objectives
+- Provide a robust 2D grid editor for designing cross-stitch charts.
+- Implement an Image-to-Chart conversion engine with DMC thread mapping.
+- Generate professional, printable PDFs with symbols, grids, and thread legends.
+- Manage a digital library of DMC threads and project progress.
+
+## Requirements
+
+### 1. Pattern Editor (2D)
+- Grid-based editor with customizable canvas dimensions (stich count).
+- Toolset: Pencil, Eraser, Fill, and Shape tools.
+- Symbol Mode: Automatically assign unique symbols to different colors for high-contrast printing.
+- Backstitch support (drawing lines between grid intersections).
+
+### 2. Image Conversion Engine
+- Upload JPG/PNG and convert to a cross-stitch grid.
+- Adjustable resolution (stitches per inch).
+- Palette optimization: Limit the number of thread colors to a user-defined maximum.
+- Algorithmic matching to the official DMC thread palette.
+
+### 3. Export & Printing
+- Generate high-resolution PDFs.
+- Include a "Shopping List" / Thread Legend with estimated skein counts.
+- Multiple print views: Color blocks, Symbols-only, and Color-with-Symbols.
+
+### 4. Advanced/Engineering Features
+- Support for non-standard geometric panels (e.g., 3D Quaker Ball panel layouts).
+- 3D Visualization of stitched results on various fabric textures (Aida, Linen).
+
+### 5. Technical Constraints
+- Frontend: React with Tailwind CSS.
+- PDF Generation: jspdf or similar client-side library.
+- Performance: Must handle large grids (e.g., 300x300) smoothly.
+
+## Stakeholders
+- Mark Burhop
+- Tracey Burhop (Lead User / Cross-Stitch Expert)
+
+## Notes
+- Full competitive analysis in `ANALYSIS.md`
+- v2 spec in `speckit.specify.v2`
+- v2 tasks in `speckit.tasks.v2`
+- v2 plan in `speckit.plan.v2`
+- ATR cross-stitch research bundles are empty (no data collected)

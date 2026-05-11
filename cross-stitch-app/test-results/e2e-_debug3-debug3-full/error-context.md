@@ -1,0 +1,380 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: e2e/_debug3.spec.ts >> debug3
+- Location: tests/e2e/_debug3.spec.ts:3:5
+
+# Error details
+
+```
+Test timeout of 60000ms exceeded.
+```
+
+```
+Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open '/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/.playwright-artifacts-4/traces/1988a8156f39c2b861a5-27eb5094aa68664600dc-recording1.trace'
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Cross-Stitch Studio" [level=1] [ref=e6]
+      - generic [ref=e7]: New Pattern
+    - generic [ref=e8]:
+      - button "File" [ref=e10]:
+        - img [ref=e11]
+        - text: File
+      - button "Import Image" [ref=e15]:
+        - img [ref=e16]
+        - text: Import Image
+      - button "Switch to dark mode" [ref=e19]:
+        - img [ref=e20]
+      - button "Toggle right panel" [ref=e22]:
+        - img [ref=e23]
+        - text: Panel
+      - button "Undo" [disabled] [ref=e25]:
+        - img [ref=e26]
+      - button "Redo" [disabled] [ref=e29]:
+        - img [ref=e30]
+      - button "Show keyboard shortcuts" [ref=e33]:
+        - img [ref=e34]
+      - button "Start onboarding tour" [ref=e36]: 🧵 Tour
+      - button "Show thumbnail gallery" [ref=e37]:
+        - img [ref=e38]
+      - button "Share pattern link" [ref=e42]:
+        - img [ref=e43]
+        - text: Share
+      - button "🖼️ Export PNG" [ref=e49]:
+        - generic [ref=e50]: 🖼️
+        - generic [ref=e51]: Export PNG
+      - button "Export" [ref=e53]:
+        - img [ref=e54]
+        - text: Export
+  - generic [ref=e57]:
+    - complementary "Color and tool sidebar" [ref=e58]:
+      - complementary [ref=e59]:
+        - generic [ref=e60]:
+          - button "Tools" [ref=e61]:
+            - img [ref=e62]
+            - text: Tools
+          - button "Colors" [ref=e65]:
+            - img [ref=e66]
+            - text: Colors
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - heading "Backstitch" [level=3] [ref=e74]
+            - button [ref=e75]:
+              - img [ref=e76]
+          - button "Backstitch Tool" [ref=e78]:
+            - img [ref=e79]
+            - generic [ref=e84]: Backstitch Tool
+        - generic [ref=e85]:
+          - heading "Drawing Tools" [level=3] [ref=e86]
+          - generic [ref=e87]:
+            - button "Pencil" [ref=e88]:
+              - img [ref=e89]
+            - button "Eraser" [ref=e92]:
+              - img [ref=e93]
+            - button "Fill" [ref=e96]:
+              - img [ref=e97]
+          - generic [ref=e101]:
+            - button "Symbols" [ref=e102]:
+              - img [ref=e103]
+              - generic [ref=e108]: Symbols
+            - button "Toggle grid lines" [ref=e109]:
+              - img [ref=e110]
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - img [ref=e116]
+              - text: Stitch Counter
+            - button "Reset counter" [ref=e120]:
+              - img [ref=e121]
+          - generic [ref=e124]:
+            - generic [ref=e125]: "0"
+            - generic [ref=e126]: of 1,600 stitches (0%)
+          - generic [ref=e127]:
+            - button "Decrement (-1)" [ref=e128]:
+              - img [ref=e129]
+            - button "+1" [ref=e130]:
+              - img [ref=e131]
+              - generic [ref=e132]: "+1"
+        - generic [ref=e133]:
+          - heading "Zoom" [level=3] [ref=e134]
+          - generic [ref=e135]:
+            - button "−" [ref=e136]
+            - generic [ref=e137]: 100%
+            - button "+" [ref=e138]
+            - button "Fit" [ref=e139]
+        - generic [ref=e141] [cursor=pointer]:
+          - checkbox "Alternating cells (counting aid)" [checked] [ref=e142]
+          - text: Alternating cells (counting aid)
+        - generic [ref=e144]:
+          - heading "Edit Colors" [level=3] [ref=e145]
+          - button "Swap two colors" [ref=e146]:
+            - img [ref=e147]
+        - generic [ref=e150]:
+          - generic [ref=e152]:
+            - heading "Colors" [level=3] [ref=e153]
+            - button "Select DMC brand" [ref=e154]: DMC
+          - generic [ref=e155]:
+            - generic [ref=e156]:
+              - button "1" [ref=e157]:
+                - generic: "1"
+              - button "15" [ref=e158]:
+                - generic: "15"
+              - button "16" [ref=e159]:
+                - generic: "16"
+              - button "20" [ref=e160]:
+                - generic: "20"
+              - button "21" [ref=e161]:
+                - generic: "21"
+              - button "30" [ref=e162]:
+                - generic: "30"
+              - button "32" [ref=e163]:
+                - generic: "32"
+              - button "4" [ref=e164]:
+                - generic: "4"
+              - button "5" [ref=e165]:
+                - generic: "5"
+              - button "7" [ref=e166]:
+                - generic: "7"
+              - button "8" [ref=e167]:
+                - generic: "8"
+              - button "9" [ref=e168]:
+                - generic: "9"
+              - button "10" [ref=e169]:
+                - generic: "10"
+              - button "11" [ref=e170]:
+                - generic: "11"
+              - button "12" [ref=e171]:
+                - generic: "12"
+              - button "13" [ref=e172]:
+                - generic: "13"
+              - button "14" [ref=e173]:
+                - generic: "14"
+              - button "17" [ref=e174]:
+                - generic: "17"
+              - button "18" [ref=e175]:
+                - generic: "18"
+              - button "19" [ref=e176]:
+                - generic: "19"
+              - button "22" [ref=e177]:
+                - generic: "22"
+              - button "23" [ref=e178]:
+                - generic: "23"
+              - button "24" [ref=e179]:
+                - generic: "24"
+              - button "25" [ref=e180]:
+                - generic: "25"
+              - button "26" [ref=e181]:
+                - generic: "26"
+              - button "27" [ref=e182]:
+                - generic: "27"
+              - button "28" [ref=e183]:
+                - generic: "28"
+              - button "29" [ref=e184]:
+                - generic: "29"
+              - button "33" [ref=e185]:
+                - generic: "33"
+            - generic [ref=e189]:
+              - generic [ref=e190]: DMC 1
+              - generic [ref=e191]: White
+    - main [ref=e193]:
+      - generic [ref=e194]:
+        - generic [ref=e195]: Panel 1
+        - generic [ref=e196]: 40×40 stitches
+      - generic [ref=e197]:
+        - generic [ref=e198]:
+          - generic [ref=e199]:
+            - button "Pencil" [ref=e200]:
+              - img [ref=e201]
+            - button "Eraser" [ref=e204]:
+              - img [ref=e205]
+            - button "Fill" [ref=e208]:
+              - img [ref=e209]
+          - generic [ref=e213]:
+            - button "Line (click start, click end)" [ref=e214]:
+              - img [ref=e215]
+            - button "Erase Line (click start, click end to clear cells along path)" [ref=e216]:
+              - img [ref=e217]
+            - button "Rectangle (drag to fill)" [ref=e220]:
+              - img [ref=e221]
+            - button "Circle (drag to fill)" [ref=e223]:
+              - img [ref=e224]
+            - button "Brush (drag to paint)" [ref=e226]:
+              - img [ref=e227]
+            - button "Dropper (click cell to pick color)" [ref=e230]:
+              - img [ref=e231]
+            - button "Select (drag to select)" [ref=e234]:
+              - img [ref=e235]
+            - button "Semi-Cross (click cell to set diagonal/half stitch)" [ref=e240]:
+              - img [ref=e241]
+          - generic [ref=e244]:
+            - button "Mirror full pattern horizontally" [ref=e245]:
+              - img [ref=e246]
+            - button "Mirror full pattern vertically" [ref=e249]:
+              - img [ref=e250]
+            - button "Mirror selected region horizontally" [disabled] [ref=e253]:
+              - img [ref=e254]
+            - button "Mirror selected region vertically" [disabled] [ref=e257]:
+              - img [ref=e258]
+            - button "Copy selection" [disabled] [ref=e261]:
+              - img [ref=e262]
+            - button "Paste from clipboard" [disabled] [ref=e265]:
+              - img [ref=e266]
+          - button "Notes & Annotations" [ref=e272]:
+            - img [ref=e273]
+          - button "Pattern Repeat — tile and mirror patterns" [ref=e276]:
+            - img [ref=e277]
+          - button "Backstitch tool (click to set start, click again to end)" [ref=e281]:
+            - img [ref=e282]
+          - button "Clear pattern" [ref=e287]:
+            - img [ref=e288]
+          - button "Toggle grid snap" [ref=e291]:
+            - img
+            - generic [ref=e293]: Snap
+          - button "Ruler" [ref=e294]:
+            - img [ref=e295]
+            - generic [ref=e298]: Ruler
+          - button "🎨 Recent" [ref=e299]
+          - generic [ref=e300]:
+            - button "−" [ref=e301]
+            - generic [ref=e302]: 100%
+            - button "+" [ref=e303]
+          - generic [ref=e304]: 40×40
+        - generic [ref=e307]:
+          - generic [ref=e308]:
+            - generic [ref=e309]: "1"
+            - generic [ref=e310]: "2"
+            - generic [ref=e311]: "3"
+            - generic [ref=e312]: "4"
+            - generic [ref=e313]: "5"
+            - generic [ref=e314]: "6"
+            - generic [ref=e315]: "7"
+            - generic [ref=e316]: "8"
+            - generic [ref=e317]: "9"
+            - generic [ref=e318]: "10"
+            - generic [ref=e319]: "11"
+            - generic [ref=e320]: "12"
+            - generic [ref=e321]: "13"
+            - generic [ref=e322]: "14"
+            - generic [ref=e323]: "15"
+            - generic [ref=e324]: "16"
+            - generic [ref=e325]: "17"
+            - generic [ref=e326]: "18"
+            - generic [ref=e327]: "19"
+            - generic [ref=e328]: "20"
+            - generic [ref=e329]: "21"
+            - generic [ref=e330]: "22"
+            - generic [ref=e331]: "23"
+            - generic [ref=e332]: "24"
+            - generic [ref=e333]: "25"
+            - generic [ref=e334]: "26"
+            - generic [ref=e335]: "27"
+            - generic [ref=e336]: "28"
+            - generic [ref=e337]: "29"
+            - generic [ref=e338]: "30"
+            - generic [ref=e339]: "31"
+            - generic [ref=e340]: "32"
+            - generic [ref=e341]: "33"
+            - generic [ref=e342]: "34"
+            - generic [ref=e343]: "35"
+            - generic [ref=e344]: "36"
+            - generic [ref=e345]: "37"
+            - generic [ref=e346]: "38"
+            - generic [ref=e347]: "39"
+            - generic [ref=e348]: "40"
+          - generic [ref=e349]:
+            - generic [ref=e350]:
+              - generic [ref=e351]: "1"
+              - generic [ref=e352]: "2"
+              - generic [ref=e353]: "3"
+              - generic [ref=e354]: "4"
+              - generic [ref=e355]: "5"
+              - generic [ref=e356]: "6"
+              - generic [ref=e357]: "7"
+              - generic [ref=e358]: "8"
+              - generic [ref=e359]: "9"
+              - generic [ref=e360]: "10"
+              - generic [ref=e361]: "11"
+              - generic [ref=e362]: "12"
+              - generic [ref=e363]: "13"
+              - generic [ref=e364]: "14"
+              - generic [ref=e365]: "15"
+              - generic [ref=e366]: "16"
+              - generic [ref=e367]: "17"
+              - generic [ref=e368]: "18"
+              - generic [ref=e369]: "19"
+              - generic [ref=e370]: "20"
+              - generic [ref=e371]: "21"
+              - generic [ref=e372]: "22"
+              - generic [ref=e373]: "23"
+              - generic [ref=e374]: "24"
+              - generic [ref=e375]: "25"
+              - generic [ref=e376]: "26"
+              - generic [ref=e377]: "27"
+              - generic [ref=e378]: "28"
+              - generic [ref=e379]: "29"
+              - generic [ref=e380]: "30"
+              - generic [ref=e381]: "31"
+              - generic [ref=e382]: "32"
+              - generic [ref=e383]: "33"
+              - generic [ref=e384]: "34"
+              - generic [ref=e385]: "35"
+              - generic [ref=e386]: "36"
+              - generic [ref=e387]: "37"
+              - generic [ref=e388]: "38"
+              - generic [ref=e389]: "39"
+              - generic [ref=e390]: "40"
+            - generic [ref=e2031]:
+              - generic [ref=e2032]: "1"
+              - generic [ref=e2033]: "2"
+              - generic [ref=e2034]: "3"
+              - generic [ref=e2035]: "4"
+              - generic [ref=e2036]: "5"
+              - generic [ref=e2037]: "6"
+              - generic [ref=e2038]: "7"
+              - generic [ref=e2039]: "8"
+              - generic [ref=e2040]: "9"
+              - generic [ref=e2041]: "10"
+              - generic [ref=e2042]: "11"
+              - generic [ref=e2043]: "12"
+              - generic [ref=e2044]: "13"
+              - generic [ref=e2045]: "14"
+              - generic [ref=e2046]: "15"
+              - generic [ref=e2047]: "16"
+              - generic [ref=e2048]: "17"
+              - generic [ref=e2049]: "18"
+              - generic [ref=e2050]: "19"
+              - generic [ref=e2051]: "20"
+              - generic [ref=e2052]: "21"
+              - generic [ref=e2053]: "22"
+              - generic [ref=e2054]: "23"
+              - generic [ref=e2055]: "24"
+              - generic [ref=e2056]: "25"
+              - generic [ref=e2057]: "26"
+              - generic [ref=e2058]: "27"
+              - generic [ref=e2059]: "28"
+              - generic [ref=e2060]: "29"
+              - generic [ref=e2061]: "30"
+              - generic [ref=e2062]: "31"
+              - generic [ref=e2063]: "32"
+              - generic [ref=e2064]: "33"
+              - generic [ref=e2065]: "34"
+              - generic [ref=e2066]: "35"
+              - generic [ref=e2067]: "36"
+              - generic [ref=e2068]: "37"
+              - generic [ref=e2069]: "38"
+              - generic [ref=e2070]: "39"
+              - generic [ref=e2071]: "40"
+      - button "Pattern Repeat" [ref=e2072]:
+        - img [ref=e2073]
+```

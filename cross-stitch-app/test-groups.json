@@ -1,0 +1,94 @@
+{
+  "groups": [
+    {
+      "id": "undo-redo",
+      "name": "Undo/Redo & History",
+      "pattern": "undo*red*.spec.ts",
+      "description": "All undo/redo, history persistence, color swap undo tests"
+    },
+    {
+      "id": "canvas",
+      "name": "Canvas Controls",
+      "pattern": "canvas*.spec.ts",
+      "description": "Canvas rendering, zoom, pan, panel switching"
+    },
+    {
+      "id": "export",
+      "name": "Export & Share",
+      "pattern": "export*.spec.ts",
+      "description": "PNG, PDF, shopping list, instructions, share link, QR code"
+    },
+    {
+      "id": "drawing",
+      "name": "Drawing Tools",
+      "pattern": "drawing*.spec.ts",
+      "description": "Pencil, eraser, fill, line, rectangle, circle, brush, dropper"
+    },
+    {
+      "id": "colors",
+      "name": "Color Palette",
+      "pattern": "color*.spec.ts",
+      "description": "Palette, history, brand switching, color swap"
+    },
+    {
+      "id": "grid",
+      "name": "Grid & Labels",
+      "pattern": "grid*.spec.ts",
+      "description": "Grid lines, labels, snapping, rulers, zoom"
+    },
+    {
+      "id": "keyboard",
+      "name": "Keyboard & Shortcuts",
+      "pattern": "keyboard*.spec.ts",
+      "description": "Keyboard shortcuts, shortcut panel, input handling"
+    },
+    {
+      "id": "progress",
+      "name": "Progress Tracker",
+      "pattern": "progress*.spec.ts",
+      "description": "Stitch counter, progress percentage, completion tracking"
+    },
+    {
+      "id": "settings",
+      "name": "Settings & Config",
+      "pattern": "settings*.spec.ts",
+      "description": "Grid config, dimensions, theme, persistence"
+    },
+    {
+      "id": "onboarding",
+      "name": "Onboarding & Tour",
+      "pattern": "onboarding*.spec.ts",
+      "description": "Tour, intro, first-time setup"
+    },
+    {
+      "id": "notes",
+      "name": "Notes & Annotations",
+      "pattern": "notes*.spec.ts",
+      "description": "Cell notes, annotations, auto-save"
+    },
+    {
+      "id": "inventory",
+      "name": "Inventory",
+      "pattern": "inventory*.spec.ts",
+      "description": "Stock management, floss tracking, availability"
+    },
+    {
+      "id": "pattern",
+      "name": "Pattern Repeat",
+      "pattern": "pattern*.spec.ts",
+      "description": "Pattern repeat, mirror transforms, tiling"
+    },
+    {
+      "id": "3d",
+      "name": "3D Visualizer",
+      "pattern": "3d*.spec.ts",
+      "description": "3D rendering, visualization, dead code checks"
+    },
+    {
+      "id": "misc",
+      "name": "Miscellaneous",
+      "pattern": "_debug*.spec.ts, header*.spec.ts, responsive*.spec.ts, thumbnail*.spec.ts, image-*.spec.ts, conversion-*.spec.ts, context*.spec.ts, symbol*.spec.ts, written-*.spec.ts, shopping-*.spec.ts, right-panel*.spec.ts, sidebar*.spec.ts, load-project*.spec.ts, clear-pattern*.spec.ts, cross-panel*.spec.ts, store-integrity*.spec.ts, stress-*.spec.ts, tool-*.spec.ts, data-*.spec.ts, history-*.spec.ts, select-*.spec.ts, mirror-transform*.spec.ts, special-*.spec.ts",
+      "description": "Debug files, responsive, image import, conversion, context menu, symbols, written instructions, shopping list, right panel, sidebar, load project, clear pattern, cross-panel, store integrity, stress tests, tools, data flow, history, select/copy/paste, mirror transforms, special stitches"
+    }
+  ]
+}

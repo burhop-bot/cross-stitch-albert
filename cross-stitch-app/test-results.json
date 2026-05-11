@@ -1,0 +1,671 @@
+{
+  "config": {
+    "configFile": "/sandbox/.openclaw-data/workspace/cross-stitch-app/playwright.config.ts",
+    "rootDir": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "smoke",
+        "name": "smoke",
+        "testDir": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "full",
+        "name": "full",
+        "testDir": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e/image-conversion-undo-redo.spec.ts",
+      "file": "e2e/image-conversion-undo-redo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Undo after image conversion",
+          "file": "e2e/image-conversion-undo-redo.spec.ts",
+          "line": 69,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[ @smoke ] undo after image conversion restores the pre-conversion grid state",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6684,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:46:41.664Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-19527f72ef7882ec7ecb",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 70,
+              "column": 7
+            },
+            {
+              "title": "undo stack has correct entry count after conversion",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7127,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:46:48.588Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-42f8c7de2dc4c10dfdeb",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 107,
+              "column": 7
+            },
+            {
+              "title": "undo after conversion does not affect manually placed stitches outside converted region",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3931,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:46:55.738Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-02155cd23e840d5aec2a",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 165,
+              "column": 7
+            },
+            {
+              "title": "undo works correctly when conversion replaces an entire grid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9376,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:46:59.684Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-1f468a014cc14aa3d8f6",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 199,
+              "column": 7
+            },
+            {
+              "title": "redo re-applies the last action after undo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4412,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:09.073Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-1915b1de5d4a76c67611",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 247,
+              "column": 7
+            },
+            {
+              "title": "redo is invalidated when new edits are made after undo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6829,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:13.504Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-ee4f4e597fc3c7886a76",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 283,
+              "column": 7
+            },
+            {
+              "title": "redo survives panel open/close without new edits",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6592,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:20.353Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-6a346fed40a946bad131",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 324,
+              "column": 7
+            },
+            {
+              "title": "undo/redo works after switching tools during conversion flow",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4678,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:26.963Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-a382e619e4d9aaad90be",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 370,
+              "column": 7
+            },
+            {
+              "title": "undo after two rapid conversions restores intermediate state",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10227,
+                      "error": {
+                        "message": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header') to be visible\u001b[22m\n\n    at Object.page (/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts:25:16)",
+                        "location": {
+                          "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts",
+                          "column": 16,
+                          "line": 25
+                        },
+                        "snippet": "   at fixtures/base.ts:25\n\n  23 |   page: async ({ page }, use) => {\n  24 |     await page.goto('/')\n> 25 |     await page.waitForSelector('header', { timeout: 10000 })\n     |                ^\n  26 |     // Wait for the main header buttons to be rendered (File, Import, Share, Export)\n  27 |     await page.locator('button').filter({ hasText: 'File' }).first().waitFor({ state: 'visible', timeout: 10000 })\n  28 |     await use(page)"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header') to be visible\u001b[22m\n\n\n   at fixtures/base.ts:25\n\n  23 |   page: async ({ page }, use) => {\n  24 |     await page.goto('/')\n> 25 |     await page.waitForSelector('header', { timeout: 10000 })\n     |                ^\n  26 |     // Wait for the main header buttons to be rendered (File, Import, Share, Export)\n  27 |     await page.locator('button').filter({ hasText: 'File' }).first().waitFor({ state: 'visible', timeout: 10000 })\n  28 |     await use(page)\n    at Object.page (/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts:25:16)"
+                        },
+                        {
+                          "message": "Error: apiRequestContext._wrapApiCall: Cannot find module '../zipBundle'\nRequire stack:\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/localUtils.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/dispatchers/localUtilsDispatcher.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/dispatchers/playwrightDispatcher.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/server/index.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/remote/playwrightConnection.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/remote/playwrightServer.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/androidServerImpl.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/inProcessFactory.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/lib/inprocess.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright-core/index.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/testType.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/test.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/testLoader.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/worker/workerMain.js\n- /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/common/process.js"
+                        },
+                        {
+                          "message": "Error: Cannot find package 'playwright-core' imported from /sandbox/.openclaw-data/workspace/cross-stitch-app/node_modules/playwright/lib/worker/testTracing.js"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:31.661Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-image-conversion-undo--948d4-restores-intermediate-state-full/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/e2e-image-conversion-undo--948d4-restores-intermediate-state-full/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/sandbox/.openclaw-data/workspace/cross-stitch-app/tests/fixtures/base.ts",
+                        "column": 16,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-797f7d4b39db51e59d8b",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 403,
+              "column": 7
+            },
+            {
+              "title": "undo works while conversion panel is open",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "failed",
+                      "duration": 0,
+                      "error": {
+                        "message": "Error: worker process exited unexpectedly (code=1, signal=null)"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: worker process exited unexpectedly (code=1, signal=null)"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:42.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-0dd76d02d77aa84994e8",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 451,
+              "column": 7
+            },
+            {
+              "title": "undo/redo with notes survives conversion panel interaction",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:42.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-a59ee18e408391c751e5",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 497,
+              "column": 7
+            },
+            {
+              "title": "undo after dimension change following conversion restores original dimensions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-5e12fe22a8f7e016a2a9",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 557,
+              "column": 7
+            },
+            {
+              "title": "undo stack remains consistent after conversion panel open→close→edit cycle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-0d84c255cfc581e05afc",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 613,
+              "column": 7
+            },
+            {
+              "title": "canceling conversion does not push an entry to undo stack",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-7a0a04436b35e6066719",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 669,
+              "column": 7
+            },
+            {
+              "title": "undo after conversion flow preserves grid data integrity",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "full",
+                  "projectName": "full",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-11T16:47:42.112Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4aff8b6fe0a30aabba98-83445d4f7cefcd476d2c",
+              "file": "e2e/image-conversion-undo-redo.spec.ts",
+              "line": 709,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-11T16:46:40.669Z",
+    "duration": 61446.185000000005,
+    "expected": 8,
+    "skipped": 5,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

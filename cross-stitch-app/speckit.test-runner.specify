@@ -1,0 +1,136 @@
+# Test Runner Specification: Incremental E2E Test Execution & Auto-Fix
+
+## Purpose
+A system to run Playwright E2E tests in configurable subsets, track status between runs, and automatically fix bugs after all tests complete.
+
+## Requirements
+1. Run tests in groups (not all 1,613 at once)
+2. Update status after each group completes
+3. After all groups run, group failures and fix bugs automatically
+4. Provide clear pass/fail/unknown status at all times
+
+## Test Groups (15 categories, 1,613 tests)
+
+| Group | Files | Test Count | Description |
+|-------|-------|------------|-------------|
+| undo-redo | undo-redo*.spec.ts | ~50 | All undo/redo tests |
+| canvas | canvas-*.spec.ts | ~30 | Canvas controls, rendering |
+| export | export-*.spec.ts | ~20 | PNG, PDF, sharing |
+| drawing | drawing-*.spec.ts | ~40 | Pencil, eraser, fill, shapes |
+| colors | color-*.spec.ts | ~30 | Palette, history, swap |
+| grid | grid-*.spec.ts | ~40 | Labels, snapping, rulers |
+| keyboard | keyboard-*.spec.ts | ~20 | Shortcuts, panels |
+| progress | progress-*.spec.ts | ~10 | Progress tracker |
+| settings | settings-*.spec.ts | ~20 | Config, persistence |
+| onboarding | onboarding-*.spec.ts | ~10 | Tour, intro |
+| notes | notes-*.spec.ts | ~10 | Annotations |
+| inventory | inventory-*.spec.ts | ~20 | Stock management |
+| pattern | pattern-*.spec.ts | ~20 | Repeat, mirror |
+| 3d | 3d-*.spec.ts | ~10 | 3D visualizer |
+| misc | *_debug*.spec.ts, other | ~50 | Debug, cleanup, edge cases |
+
+## Execution Flow
+
+```
+1. Start test run (create status file)
+2. Run Group 1 (undo-redo) → update status
+3. Run Group 2 (canvas) → update status
+4. ... continue for all groups ...
+5. All groups complete? → Run fix-bugs.sh
+6. Fix bugs → re-run affected tests
+7. Repeat until all pass or max iterations reached
+```
+
+## Status File Format (`test-status.json`)
+
+```json
+{
+  "runId": "run-2026-05-03-160000",
+  "startTime": "2026-05-03T16:00:00Z",
+  "currentGroup": "undo-redo",
+  "completedGroups": [],
+  "allGroups": ["undo-redo", "canvas", "export", "drawing", "colors", "grid", "keyboard", "progress", "settings", "onboarding", "notes", "inventory", "pattern", "3d", "misc"],
+  "results": {
+    "undo-redo": {
+      "status": "complete",
+      "total": 50,
+      "passed": 45,
+      "failed": 5,
+      "failures": [
+        {
+          "testName": "undo reverts last grid edit",
+          "file": "tests/e2e/undo-redo.spec.ts",
+          "error": "expected to be visible",
+          "stack": "..."
+        }
+      ]
+    }
+  },
+  "fixBugsRun": false,
+  "maxFixIterations": 3,
+  "currentFixIteration": 0
+}
+```
+
+## Commands
+
+```bash
+# Run all tests (with groups)
+bash test-runner.sh run-all
+
+# Run a single group
+bash test-runner.sh run-group undo-redo
+
+# Check status
+bash test-runner.sh status
+
+# Fix bugs after all tests run
+bash test-runner.sh fix
+
+# View summary
+bash test-runner.sh summary
+```
+
+## Fix Strategy
+
+After all tests complete, `fix-bugs.sh` runs:
+
+1. **Group failures** by file/category
+2. **Identify common patterns** (e.g., 5 failures all saying "element not found")
+3. **Create fix plan** (priority order: app bugs > test bugs > infrastructure)
+4. **Apply fixes** one at a time
+5. **Re-run only affected tests** to verify
+6. **Repeat** until all pass or max iterations (3) reached
+
+## Discord Integration
+
+After each group run, send a summary:
+```
+🦞 Test Group: [name]
+✅ Passed: X | ❌ Failed: Y
+Top failures: [list]
+Next group: [name]
+```
+
+After all tests complete:
+```
+🦞 All Tests Complete
+✅ Total Passed: X | ❌ Failed: Y | ⏭️ Skipped: Z
+Pass rate: Z%
+Fixes applied: [list]
+Remaining failures: [list]
+```
+
+## Dependencies
+
+- Playwright 1.59.1 ✅
+- Chromium browser ✅
+- Vite preview server on :5556 ✅
+- Node.js v22.22.1 ✅
+
+## Setup Required
+
+1. Create `test-groups.json` with group definitions
+2. Create `test-runner.sh` script
+3. Create `fix-bugs.sh` script
+4. Update cron job to use new runner

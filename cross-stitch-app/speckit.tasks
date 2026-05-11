@@ -1,0 +1,57 @@
+# Project Tasks: Cross-Stitch Pattern Studio
+
+## Phase 1: Foundation
+- [x] 001: Initialize Vite project with React and TypeScript.
+- [x] 002: Install core dependencies (Tailwind, Lucide, Zustand).
+- [x] 003: Setup basic layout (Canvas area, Left Toolbar, Right Sidebar).
+- [x] 004: Import DMC color database as a JSON utility.
+
+## Phase 2: Core Grid Editor
+- [x] 005: Build a high-performance `PixelGrid` component using HTML5 Canvas or SVG.
+- [x] 006: Implement panning and zooming for the grid.
+- [x] 007: Build the `DrawingTools` logic (Color selection, click-to-fill).
+- [x] 008: Implement "Symbol View" toggle.
+
+## Phase 3: Image-to-Chart Engine
+- [x] 009: Create `ImageUploader` component.
+- [x] 010: Implement image resizing and pixelation logic.
+- [x] 011: Build color mapping utility (matching RGB to nearest DMC).
+- [x] 012: Add "Palette Simplification" (limiting pattern to X colors).
+
+## Phase 4: Export and Legends
+- [x] 013: Build `PDFGenerator` utility.
+- [x] 014: Design the printed legend template (Symbol | DMC Code | Name).
+- [x] 015: Add thread length calculation logic.
+- [x] 016: Add Export button to Header/Sidebar UI.
+- [x] 017: Wire up PDF generation with project state (grid, palette, usage).
+- [x] 018: Add download functionality for Pattern PDF and Shopping List.
+
+## Phase 5: Advanced Features
+- [x] 019: Implement 3D visualization on fabric textures.
+- [x] 020: Add Quaker Ball geometric panel support (pentagon masking, assembly view).
+- [x] 021: Implement project save/load (JSON export).
+- [x] 022: Add material inventory tracking (skein management, usage alerts).
+
+---
+
+## Implementation Log
+
+### 2026-04-16: Completed Phase 5
+
+**Task 020 - Quaker Ball Pentagon Support:**
+- Created `pentagonUtils.ts` with geometry functions for regular pentagons
+- Implemented pentagon mask generation for 20x20 grid
+- Updated `GridCanvas.tsx` to apply pentagon masking
+- Cells outside pentagon are now grayed out and non-interactive
+- Added visual indicator in toolbar showing "Pentagon Panel"
+
+**Task 022 - Material Inventory Tracking:**
+- Extended `projectStore.ts` with `Skein` interface and inventory state
+- Created `InventoryPanel.tsx` component with:
+  - Skein list grouped by DMC color
+  - Quantity management (add/remove/update)
+  - Usage tracking against inventory
+  - Low stock alerts with recommendations
+  - Quick-add buttons for project colors
+- Integrated inventory toggle in Header with Package icon
+- Estimated 800 stitches per skein for usage calculations

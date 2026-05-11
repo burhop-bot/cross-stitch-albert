@@ -1,0 +1,97 @@
+# E2E Test Plan: Cross-Stitch Pattern Studio v2
+
+## Strategy
+
+**Objective:** Automated E2E tests that validate the core user workflows of the Cross-Stitch Pattern Studio, catching regressions in UI layout, interactivity, and data flow.
+
+**Framework:** Playwright v1.59.1 (already installed)
+**Language:** TypeScript
+**Execution:** `npx playwright test` (can be hooked into cron)
+
+## Architecture
+
+### Project Structure
+```
+tests/
+├── e2e/
+│   ├── app-shell.spec.ts          # TC-01: Header, menus, theme
+│   ├── project-setup.spec.ts      # TC-02: Settings, canvas creation
+│   ├── grid-drawing.spec.ts       # TC-03: Drawing tools, grid, zoom/pan
+│   ├── color-palette.spec.ts      # TC-04: Palette, brands, swap
+│   ├── image-import.spec.ts       # TC-05: Import & K-Means conversion
+│   ├── special-stitches.spec.ts   # TC-06: Backstitch, semi-cross, notes, progress
+│   ├── pattern-repeat.spec.ts     # TC-07: Mirror, repeat
+│   ├── export-share.spec.ts       # TC-08: PDF, PNG, save/load, share
+│   ├── responsive.spec.ts         # TC-09: Layout at different viewport sizes
+│   └── context-menu.spec.ts       # TC-10: Context menu, popups, dialogs
+├── fixtures/
+│   └── base.ts                    # Custom fixtures, project setup helpers
+├── utils/
+│   └── grid-helpers.ts            # Grid coordinate math, tool activation helpers
+└── global-setup.ts                # Dev server start / download browsers
+```
+
+### Test Execution Modes
+1. **Smoke Suite** (`--grep @smoke`): Critical paths only — TC-01 shell, TC-02 project setup, TC-03 draw on grid, TC-04 color palette. Fast, runs on every commit.
+2. **Full Suite**: All 12 test categories. Runs on cron, CI, or manual.
+3. **Debug Mode**: `npx playwright test --ui` or `--headed` for visual debugging.
+
+### Setup Strategy
+Each test file sets up a minimal working project via store manipulation:
+```typescript
+// fixtures/base.ts — reusable setup
+async function createTestProject(page) {
+  // Navigate to app
+  await page.goto('/')
+  // Open Project settings, create a 40×40 grid
+  // Select a color
+  // Should now have an editable grid
+}
+```
+
+### Page Object / Helper Pattern
+- Grid interactions use coordinate-based clicks (cell position math)
+- Tool activation uses button role/label selectors
+- Color palette uses swatch selectors
+- DRY helpers for common patterns: `selectTool()`, `placeStitch()`, `setDimensions()`
+
+## Prioritization
+
+### P0 — Must Pass (Smoke, every run)
+- App loads and renders header
+- Settings panel opens and accepts dimensions
+- Grid renders with specified dimensions
+- Pencil tool places stitches
+- Color palette switches active color
+- Grid lines render with visual hierarchy
+
+### P1 — Should Pass (Full suite, daily)
+- Image import flow
+- PDF export triggers download
+- Save/Load project JSON
+- Theme toggle
+- Mirror operations
+- Backstitch tool
+- Semi-cross tool
+
+### P2 — Nice to Have (weekly)
+- Context menu interactions
+- Onboarding tour steps
+- Pattern library browse
+- Thumbnail gallery
+- Written instructions panel
+- Color history panel
+- Keyboard shortcuts panel
+
+## Browser & Environment
+- **Headless mode:** Default for CI/cron
+- **Headed mode:** `--headed` flag for local debugging
+- **Viewport:** Desktop (1280×720) default; responsive tests use `setViewportSize()`
+- **Network:** No mocking needed — app is fully client-side
+- **Timeouts:** 15s default, 30s for export operations (PDF/PNG generation)
+
+## CI / Cron Integration
+- Add `test:e2e:smoke` and `test:e2e:full` scripts to package.json
+- Cron job can run `npm run test:e2e:smoke` to verify app integrity
+- Failing tests should flag a message in the cron verification output
+- Build preview server used for cron tests (matches production deployment)

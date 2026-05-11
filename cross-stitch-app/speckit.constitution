@@ -1,0 +1,28 @@
+# Project Constitution: Quaker Ball Designer
+
+## Core Principles
+1. **Precision first:** Since Quaker Balls require exact panel sizes for assembly, the software must prioritize geometric accuracy.
+2. **User-Friendly for Crafters:** The UI should be accessible to hobbyists while providing powerful tools for designers.
+3. **Open Standards:** Use standard web formats (JSON, SVG, PDF) to ensure data portability.
+
+## Technical Architecture
+- **Language:** TypeScript
+- **Framework:** React 18+ (Vite as build tool)
+- **Styling:** Tailwind CSS
+- **3D Engine:** Three.js / React-Three-Fiber
+- **Icons:** Lucide-React
+- **State:** Zustand or React Context
+
+## Coding Standards
+- Functional components with Hooks.
+- Descriptive naming conventions for stitch types and geometric components.
+- Modular component structure (Editor, Visualizer, Inventory).
+- Comprehensive unit tests for geometric calculation logic.
+
+## Directory Structure
+- `/src/components`: UI components (Buttons, Modals, Forms)
+- `/src/editor`: 2D Stitching logic and Grid components
+- `/src/visualizer`: 3D Scene, Geometry mapping, Three.js hooks
+- `/src/store`: State management
+- `/src/utils`: Geometric math, PDF generation, Color mapping
+- `/src/assets`: DMC color data, textures, icons

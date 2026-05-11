@@ -1,0 +1,26 @@
+# Implementation Plan: Cross-Stitch Pattern Studio
+
+## Phase 1: Foundation (Milestone 1)
+- Project scaffolding (Vite + React + Tailwind).
+- Basic UI layout (Canvas, Toolbar, Sidebar).
+- DMC Color Palette integration (JSON data).
+
+## Phase 2: Core Grid Editor (Milestone 2)
+- High-performance grid rendering.
+- Basic drawing tools (Pencil, Eraser, Fill).
+- Color selection and "Recent Colors" list.
+
+## Phase 3: Image-to-Chart Engine (Milestone 3)
+- Image upload and downscaling logic.
+- Color quantization and DMC mapping.
+- Pattern preview and "Cleanup" tools.
+
+## Phase 4: Export and Legends (Milestone 4)
+- Symbol assignment algorithm.
+- PDF generation (Chart + Legend).
+- Thread usage estimation.
+
+## Phase 5: Advanced Features
+- 3D visualization and geometric panel support (Quaker Balls).
+- Cloud sync / Project saving.
+- Material inventory tracking.

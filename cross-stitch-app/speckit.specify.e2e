@@ -1,0 +1,142 @@
+# E2E Test Specification: Cross-Stitch Pattern Studio v2
+
+## Purpose
+End-to-end testing of the Cross-Stitch Pattern Studio UI to validate core user workflows, detect regressions, and catch layout/interaction bugs that unit tests can't reach.
+
+## Approach
+- **Framework:** Playwright (TypeScript, already installed v1.59.1)
+- **Browser:** Chromium (headless in CI, headed locally for debugging)
+- **Target:** Vite dev server (port 5555) for local dev, Vite preview build for CI
+- **Scope:** Critical user journeys — the "must work" paths that, if broken, make the app unusable
+
+## Test Categories & User Stories
+
+### TC-01: App Shell & Navigation
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-01.1 | As a user, I can load the app and see the header with app title | Header bar displays "Cross-Stitch Studio" title, is visible, has indigo background |
+| TC-01.2 | As a user, I see the File menu with Save/Load/Clear options | Clicking File button opens dropdown with Save Project, Load Project, Clear Pattern buttons |
+| TC-01.3 | As a user, I see the Export menu with PDF/Shopping List/Instructions options | Clicking Export button opens dropdown with Pattern PDF, Shopping List, Written Instructions, Progress Tracker |
+| TC-01.4 | As a user, I see Share, Export PNG, Thumbnail Gallery, Tour, and Keyboard shortcut buttons | All Header action buttons are visible and clickable |
+| TC-01.5 | As a user, the theme toggle button switches between light and dark mode | Clicking theme toggle changes the page background and component styling between light/dark themes |
+
+### TC-02: Project Settings & Canvas Creation
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-02.1 | As a designer, I can open the Project tab in the Right Panel | Clicking "Project" tab shows the SettingsPanel |
+| TC-02.2 | As a designer, I can set canvas dimensions (width/height) | SettingsPanel has width/height inputs that accept numeric values |
+| TC-02.3 | As a designer, I can apply the settings and see a grid appear | After applying settings, the main canvas area shows the grid with the specified dimensions |
+| TC-02.4 | As a designer, I can create new panels | SettingsPanel has a "New Panel" button that adds a panel to the canvas |
+| TC-02.5 | As a designer, I can select between panels | Panel selector shows multiple panels; selecting a panel switches the canvas view |
+
+### TC-03: Grid & Drawing Tools
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-03.1 | As a designer, I can place stitches on the grid using the pencil tool | Clicking cells on the grid fills them with the selected color |
+| TC-03.2 | As a designer, I can select colors from the palette | Clicking a color swatch in the sidebar palette selects it as the active color |
+| TC-03.3 | As a designer, I can erase stitches | Eraser tool clears cells when clicked |
+| TC-03.4 | As a designer, I can draw lines with the line tool | Selecting line tool and clicking two cells draws a straight line of stitches between them |
+| TC-03.5 | As a designer, I can fill a rectangular area | Selecting rectangle tool and dragging creates a filled rectangle of the selected color |
+| TC-03.6 | As a designer, I can use the flood fill tool | Fill tool replaces a contiguous region of the same color with the selected color |
+| TC-03.7 | As a designer, I can use the brush tool | Brush tool paints multiple cells while dragging, with configurable brush size |
+| TC-03.8 | As a designer, I can use the dropper to pick a color from the canvas | Dropper tool clicks a cell and sets that cell's color as the active color |
+| TC-03.9 | As a designer, I can select and copy/paste regions | Select tool selects a region; copy copies it; paste pastes it at a new location |
+| TC-03.10 | As a designer, I can see multi-weight grid lines | Grid shows three tiers of line weights: light (cell borders), medium (every 5), heavy (every 10) |
+| TC-03.11 | As a designer, I can see row/column labels on the grid | Labels appear on the grid edges at configured intervals |
+| TC-03.12 | As a designer, I can pan and zoom the canvas | Mouse wheel zooms; drag pans the canvas view |
+
+### TC-04: Color Palette & Brand Management
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-04.1 | As a designer, I can switch between floss brands (DMC/Anchor/Madeira) | Brand selector dropdown in sidebar shows brand options and updates the palette |
+| TC-04.2 | As a designer, the palette updates when I switch brands | After switching brand, the color swatches reflect the new brand's color numbers |
+| TC-04.3 | As a designer, I can see color hex values in the palette | Each swatch shows or reveals the hex value on hover |
+| TC-04.4 | As a designer, I can swap two colors in the pattern | Using swap mode, selecting two colors replaces all instances of the first with the second |
+| TC-04.5 | As a designer, I can see color history (recently used) | ColorHistoryPanel shows recently used colors as swatches |
+
+### TC-05: Image Import & Conversion
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-05.1 | As a designer, I can import an image file (drag & drop or browse) | Dragging an image onto the import area or clicking to browse loads the image |
+| TC-05.2 | As a designer, I can see an image preview after import | Preview image is displayed in the Import panel |
+| TC-05.3 | As a designer, I can convert an image using K-Means quantization | Clicking "Convert" applies K-Means color clustering and shows the converted grid |
+| TC-05.4 | As a designer, I can adjust the number of colors in conversion | Color count slider affects the resulting palette size |
+| TC-05.5 | As a designer, I can apply dithering to the converted image | Selecting dithering option (Floyd-Steinberg / Sierra) applies error diffusion |
+| TC-05.6 | As a designer, I can apply the conversion to the grid | "Apply" button populates the grid with the converted pattern |
+| TC-05.7 | As a designer, I can import an image from a URL | URL input field accepts a URL and loads the image |
+
+### TC-06: Special Stitch Types
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-06.1 | As a designer, I can draw backstitch lines | Backstitch tool draws SVG lines overlaid on the grid between two click points |
+| TC-06.2 | As a designer, I can create semi-cross stitches | Semi-cross tool clicks a cell to cycle through fill types (diagonal, quadrant) |
+| TC-06.3 | As a designer, I can add notes to cells | Double-clicking a cell opens a note popover; adding a note shows a marker on the cell |
+| TC-06.4 | As a designer, I can see progress tracking | ProgressTracker shows percentage of completed stitches |
+| TC-06.5 | As a designer, I can mark stitches as completed | Shift-click on a cell toggles its completed state (green dot indicator) |
+
+### TC-07: Pattern Repeat & Transform
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-07.1 | As a designer, I can mirror the entire pattern horizontally | Mirror H action reflects the grid left-to-right |
+| TC-07.2 | As a designer, I can mirror the entire pattern vertically | Mirror V action reflects the grid top-to-bottom |
+| TC-07.3 | As a designer, I can apply pattern repeats with mirror | PatternRepeatPanel mirrors and repeats the grid in specified modes |
+
+### TC-08: Export & Share
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-08.1 | As a designer, I can export the pattern as a PDF | Export → Pattern PDF generates and downloads a PDF file |
+| TC-08.2 | As a designer, I can export the shopping list as a PDF | Export → Shopping List generates and downloads a thread checklist PDF |
+| TC-08.3 | As a designer, I can export the pattern as a PNG | Export PNG button generates and downloads a PNG image |
+| TC-08.4 | As a designer, I can save the project as JSON | File → Save Project downloads a .json file with the full pattern data |
+| TC-08.5 | As a designer, I can load a previously saved project | File → Load Project opens a file picker and imports a .json project |
+| TC-08.6 | As a designer, I can generate a share link | Share button generates a URL-encoded pattern link |
+| TC-08.7 | As a designer, I can export written instructions | Export → Written Instructions opens the instructions panel with row-by-row descriptions |
+| TC-08.8 | As a designer, I can generate a QR code | QR Code export generates a downloadable QR code image |
+
+### TC-09: UI Layout & Responsiveness
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-09.1 | As a user, the layout is functional at desktop width (>1024px) | Sidebar, MainCanvas, and RightPanel are visible and properly sized |
+| TC-09.2 | As a user, the layout collapses appropriately at tablet width (768-1023px) | Sidebar collapses; BottomBar appears for panel navigation |
+| TC-09.3 | As a user, the layout adapts to phone width (<768px) | MainCanvas is full width; BottomBar provides access to panels via tabs |
+| TC-09.4 | As a user, the Right Panel can be opened and closed | Clicking the panel button opens the Right Panel; close button hides it |
+| TC-09.5 | As a user, the BottomBar tab navigation works | Tapping BottomBar tabs switches between Colors, Grid, Panel, and Info views |
+
+### TC-10: Context Menu & Popups
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-10.1 | As a user, right-clicking on the grid shows a context menu | Context menu appears with color palette and view options |
+| TC-10.2 | As a user, I can select a color from the context menu | Clicking a color in the context menu selects it and dismisses the menu |
+| TC-10.3 | As a user, the context menu dismisses on outside click | Clicking outside the menu closes it |
+| TC-10.4 | As a user, I can view the onboarding tour | Tour button opens a multi-step guided walkthrough |
+| TC-10.5 | As a user, I can view the keyboard shortcuts help | Keyboard shortcut button opens a modal with all available shortcuts |
+| TC-10.6 | As a user, I can clear the pattern with confirmation | Clear Pattern opens a dialog that requires typing "CLEAR" to confirm |
+
+### TC-11: Symbol Legend & Notes
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-11.1 | As a designer, I can view the symbol legend | Symbols tab in RightPanel shows symbols sorted by usage |
+| TC-11.2 | As a designer, I can add and edit notes | Notes panel allows adding, editing, and deleting notes with color badges |
+| TC-11.3 | As a designer, notes appear as markers on the grid | Cells with notes show colored dot indicators |
+
+### TC-12: Undo / Redo & History
+| ID | User Story | Acceptance Criteria |
+|----|-----------|-------------------|
+| TC-12.1 | As a designer, I can undo my last action | Undo button reverts the last grid edit |
+| TC-12.2 | As a designer, I can redo after undo | Redo button reapplies a previously undone action |
+| TC-12.3 | As a designer, keyboard shortcuts work for undo/redo | Mod+Z undoes; Mod+Shift+Z redoes |
+
+## Test Architecture Notes
+- All tests use Playwright's `test.describe` for grouping
+- Base URL from env (`PLAYWRIGHT_BASE_URL` or `http://localhost:5555`)
+- Tests use semantic selectors (`aria-label`, `role`, `data-testid`)
+- Each test is self-contained with `test.use` for page setup where needed
+- Screenshot on failure for debugging
+- Tests should pass with a fresh project (no pre-loaded state)
+
+## Not In Scope (for now)
+- Performance benchmarking (1000×1000 grid)
+- Browser compatibility beyond Chromium
+- Mobile touch gesture testing (swipe, pinch-zoom)
+- Network-level testing (API mocking)
+- Accessibility auditing (axe-core)

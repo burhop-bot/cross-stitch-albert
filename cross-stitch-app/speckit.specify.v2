@@ -1,0 +1,489 @@
+# Cross-Stitch Pattern Studio — v2 Specification
+
+## Vision
+
+A **professional-grade**, **feature-complete** cross-stitch pattern creation tool that fills the gaps competitors leave. Not just a grid editor — a complete workflow from image import to finished pattern to in-progress tracking.
+
+---
+
+## Competitor Gap Analysis
+
+### What Stitch Fiddle does well:
+- Community library (browse/share patterns)
+- Multiple floss brands (DMC, Madeira, Anchor)
+- Written chart instructions (text description per row)
+- QR code for phone-based counting while stitching
+- Chart check (validates your work)
+- Multiple craft types (cross stitch, crochet, knitting, diamond painting)
+- Free tier is usable, premium unlocks more
+
+### What Stitches Plus does well:
+- Backstitch support
+- Shape tools (rectangles, circles, ellipses)
+- Layer support
+- Image tracing (auto-trace outlines)
+- Pattern generation (geometric/repeating)
+- Thread brand library
+
+### What FlossCross does:
+- Simple online designer
+- Slot-based projects
+- Basic palette management
+
+### What stitchers consistently complain about (Reddit, forums):
+1. **No backstitch line tool** — essential for outlining faces/details
+2. **Poor image-to-chart conversion** — current algorithms are too simplistic, produce muddy results
+3. **No written instructions** — stitchers want a text description they can follow while stitching
+4. **No progress tracking** — mark rows complete, save progress
+5. **No community/library** — want to browse/share patterns
+6. **Limited floss brands** — DMC only, but stitchers use Anchor, Madeira, DMC Cross Stitch, etc.
+7. **No QR code** — can't easily take a pattern to the stitching chair
+8. **No pattern repeats** — can't easily create seamless repeats or blocks
+9. **No mirror/flip tools** — want to mirror half-patterns (common in quilts, seasonal designs)
+10. **Poor symbol customization** — can't rename symbols, change symbol styles
+11. **No dithering** — image conversion needs Floyd-Steinberg or Sierra dithering for photos
+12. **No semi-cross / fractional stitches** — for diagonal details
+13. **No backstitch overlap** — backstitch should overlay on existing stitches, not be a separate mode
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        Cross-Stitch Studio v2                     │
+├──────────────┬──────────────────────────────────┬───────────────┤
+│  Workspace   │       Main Editor                │   Right Panel │
+│              │                                  │               │
+│  Projects    │  ┌────────────────────────────┐  │  Palette      │
+│  Library     │  │  Canvas (Stitch Grid)      │  │  (multi-brand)│
+│              │  │  + Backstitch Overlay      │  │               │
+│  Settings    │  │  + Symbol Layer            │  │  Colors       │
+│              │  └────────────────────────────┘  │               │
+│              │                                  │  Tools        │
+│  Inventory   │  Toolbar                         │  (pencil,     │
+│  (per-color) │  (undo, redo, zoom, pan)        │   eraser,     │
+│              │                                  │   fill,       │
+│  Floss Brand │                                  │   backstitch, │
+│  Selector    │                                  │   shape,      │
+│              │                                  │   line,       │
+│              │                                  │   dropper)    │
+└──────────────┴──────────────────────────────────┴───────────────┘
+```
+
+---
+
+## Feature Groups
+
+### FG1: Pattern Editor (Core)
+### FG2: Image-to-Chart (Advanced)
+### FG3: Export & Print (Production)
+### FG4: Progress & Tracking (Stitching)
+### FG5: Library & Sharing (Community)
+### FG6: Floss Brands & Library (Materials)
+
+---
+
+## Feature Details
+
+### FG1: Pattern Editor
+
+#### 1.1 Grid Editor (enhanced) — CRITICAL
+- Canvas with pannable, zoomable grid
+- Cell size adjustable (4px to 48px)
+- Alternating cell shading (counting aid) — configurable colors
+- Row/column labels — 1-based numbering, configurable start, configurable font size
+- Large grid support (up to 500×500) via virtualized rendering
+
+##### FG1.1A: Multi-weight Grid Lines (MOST URGENT FIX)
+**This is the single biggest UX improvement for the grid editor.**
+
+The current app has all grid lines at the same thin weight. Competitors use **visual hierarchy** in the grid lines to make counting practical:
+
+- **Light grid lines** — every cell border (very thin, subtle gray, ~0.5-1px)
+- **Medium grid lines** — every 5 stitches (bold, darker, ~2px) — creates counting blocks
+- **Heavy grid lines** — every 10 stitches (bold + darkest, ~2-3px) — creates major divisions
+- **Number labels** change at heavy line intervals (bold, larger font, darker color)
+- **Number labels** also change at medium line intervals (slightly bolder)
+
+**Implementation details:**
+```typescript
+interface GridLineConfig {
+  lightLineColor: string;    // every cell — e.g., '#e5e7eb'
+  lightLineWidth: number;    // e.g., 0.5
+  mediumInterval: number;    // every N stitches — e.g., 5
+  mediumLineColor: string;   // e.g., '#9ca3af'
+  mediumLineWidth: number;   // e.g., 2
+  heavyInterval: number;     // every N stitches — e.g., 10  
+  heavyLineColor: string;    // e.g., '#4b5563'
+  heavyLineWidth: number;    // e.g., 3
+}
+```
+
+**Rendering approach:**
+- Three layered overlays (not single-pass): light on bottom, medium on middle, heavy on top
+- Or: single-pass with conditional lineWidth per border
+- Use CSS box-shadow inset for grid lines (avoids double-line issue at intersections)
+- Number labels rendered in a separate layer outside the grid
+- Labels only visible when zoom > threshold (hide at high zoom to save space)
+- Label interval: every 1 stitch, but only shown at every 5 when zoom is low
+
+**Competitor reference — Stitch Fiddle:**
+- Every 5 cells: darker vertical and horizontal lines
+- Every 10 cells: even darker lines
+- Row/column numbers change to bold/darker at heavy line boundaries
+- Numbers on both left AND top edges
+- Label font is large and readable even from a distance
+
+**Competitor reference — Stitches Plus:**
+- Configurable grid line weight at any interval
+- Grid lines can be different colors for different intervals
+- Numbers can be on edges only, or on both edges
+- "Block mode" — numbers only at every N cells instead of every 1
+
+##### FG1.1B: Label Configuration
+- Label position: left edge only, right edge only, both, or none
+- Label start number: 1-based or 0-based (some stitchers prefer 0-based)
+- Label interval: every 1, 5, or 10 (block mode)
+- Label font size: configurable (small/medium/large)
+- Label font color: configurable
+- Show labels even when grid lines are hidden (standalone mode)
+- Label color can match the medium/heavy line color for visual coherence
+
+#### 1.2 Drawing Tools
+- **Pencil** — single stitch fill
+- **Eraser** — clear stitch
+- **Fill (Flood)** — flood-fill connected region of same color (BFS)
+- **Line** — Bresenham line tool for backstitch outlines
+- **Rectangle** — draw filled or outline rectangles
+- **Circle** — draw filled or outline circles
+- **Dropper/Color Picker** — sample color from canvas
+- **Select & Move** — select region, move to another location
+- **Copy/Paste** — copy selection to clipboard (within or across panels)
+- **Mirror/Flip** — mirror selection horizontally or vertically
+- **Brush** — multi-stitch brush (adjustable width)
+- **Erase Line** — erase along a line path
+
+#### 1.3 Backstitch Layer (NEW)
+- Separate backstitch layer overlaying the main stitch grid
+- Draw continuous lines between grid points
+- Line width configurable (1px, 2px, 3px stitch widths)
+- Line color independent of thread colors
+- Can be toggled visible/hidden in editing mode
+- Rendered in final output as solid lines between stitch centers
+- Symbol mode: backstitch rendered as solid lines, not symbols
+- Backstitch lines stored as `[{x1,y1,x2,y2,color}]` per panel
+
+#### 1.4 Symbol System (enhanced)
+- Auto-assign symbols (A-Z, a-z, 0-9, then Greek, special chars)
+- **Manual symbol editing** — click a color swatch in palette to reassign its symbol
+- **Symbol style selector** — circle, square, triangle, diamond, star, heart, cross, dot, custom
+- **Symbol size** — configurable relative to cell size
+- **Symbol color** — override per-color symbol fill/outlined colors
+- **Symbol legend** — auto-generated, sorted by usage count
+- **Custom symbols** — allow Unicode characters and simple SVG shapes
+- **No-symbol mode** — solid color blocks only
+
+##### FG1.1C: Label Visibility Rules
+- When zoom < 50%: show numbers only at every 10 (to avoid crowding)
+- When zoom 50-100%: show numbers at every 5
+- When zoom > 100%: show numbers at every 1
+- Labels always visible for the current row/column being edited (highlighted)
+- When panning/zooming, labels auto-adjust based on current zoom level
+- **Color blocks** — solid color cells
+- **Symbol only** — symbols on white background
+- **Color with symbols** — colored cells with symbol overlay
+- **Counting view** — alternating cell colors + numbered rows/cols
+- **3D preview** — WebGL preview of finished project (existing)
+- **Zoom ranges**: 25% to 800%
+- **Pan**: mouse drag or arrow keys
+
+#### 1.6 Undo/Redo
+- Configurable history depth (default 50)
+- Per-panel history
+- Keyboard shortcuts: Ctrl+Z, Ctrl+Shift+Z
+
+#### 1.7 Multiple Panels
+- Support for multi-panel designs (quilts, banners, 3D objects)
+- Rename/delete/add panels
+- Link panels (shared color palette)
+- Panel tabs for switching
+- Grid dimensions per panel (flexible layout)
+
+---
+
+### FG2: Image-to-Chart
+
+#### 2.1 Image Upload
+- JPG, PNG, GIF, WebP, BMP
+- Drag-and-drop + file picker
+- URL paste (from clipboard)
+- Image preview with aspect ratio lock
+
+#### 2.2 Stitch Width Estimation
+- Canvas size in stitches (width × height)
+- Stitch size in mm (configurable per fabric)
+- Fabric type: Aida 11/14/16/18ct, Evenweave 14/16/18ct, Linen
+- Aspect ratio lock toggle
+- Auto-calculate stitch size from image dimensions
+
+#### 2.3 Color Quantization (ENHANCED)
+- **K-Means clustering** (k-means++) for color reduction
+- **Mahalanobis distance** to DMC palette (better than Euclidean)
+- **Configurable max colors** (2 to 128)
+- **Preserve dominant colors** — option to keep specific colors (e.g., skin tones, backgrounds)
+- **Color grouping** — group similar colors into one DMC shade
+
+#### 2.4 Dithering (NEW)
+- **Floyd-Steinberg dithering** — for photorealistic results
+- **Sierra 3-2-1 dithering** — lighter, smoother results
+- **Stucki dithering** — alternative for smooth gradients
+- **No dithering** — clean color blocks
+- Toggle dithering on/off, adjustable threshold
+
+#### 2.5 Post-Conversion Cleanup Tools
+- **Reduce colors** — merge similar colors post-conversion
+- **Increase colors** — split dominant colors
+- **Smoothing** — remove single-stitch noise (median filter)
+- **Isolate noise** — find and select single isolated stitches
+- **Batch recolor** — select all stitches of color X, change to color Y
+- **Crop tool** — trim blank borders from converted image
+- **Resize tool** — resize grid after conversion (nearest-neighbor)
+
+#### 2.6 Color Swapping
+- Click palette color, click target color → swap all occurrences
+- Range swap — select color range and replace
+-eyedropper on canvas → pick color to swap
+
+---
+
+### FG3: Export & Print
+
+#### 3.1 PDF Pattern Export (enhanced)
+- Page size: A4, A5, Letter, Legal, Custom
+- Orientation: Portrait, Landscape
+- **Symbol view** — grid with symbols
+- **Color block view** — solid colors
+- **Half-cross view** — show X with diagonal lines
+- **Thread legend** — DMC numbers, color swatches, thread count, estimated skeins
+- **Multiple pages** — for large patterns, split across pages with continuity markers
+- **Bold/stitch count labels** — row/column numbers at intervals (every 5/10)
+- **Title/author** on first page
+- **Page numbering** with "page X of Y"
+- **Scale reference** — printed stitch size reference
+
+#### 3.2 Shopping List Export (enhanced)
+- Per-color thread usage (stitches, cm, estimated skeins)
+- Multiple floss brands shown
+- Checkbox list (printable)
+- Sort by: color number, usage (descending), alphabetical
+- **Thread length calculator** — accounts for strand count (1, 2, or 3 strands)
+
+#### 3.3 Written Instructions (NEW)
+- Row-by-row text description of the pattern
+- Format: "Row 1: 3×BL, 5×RD, 2×BL, 8×WH, ..."
+- Abbreviated: use first letters of color names
+- Group consecutive same-color stitches
+- **Abbreviation dictionary** — customizable
+- **Export formats**: PDF, TXT, Markdown
+- **Reading direction**: left-to-right, right-to-left, top-to-bottom
+- **Notation options**: numeric codes, color names, symbols
+
+#### 3.4 QR Code (NEW)
+- Generate QR code linking to:
+  - PDF download
+  - Online pattern view
+  - Progress tracker (if online)
+- Embed in PDF as small corner element
+- Scan with phone to view pattern while stitching
+
+---
+
+### FG4: Progress & Tracking
+
+#### 4.1 Progress Tracking
+- **Mark stitches as completed** — long-press or shift-click
+- Color-coded completed stitches (dimmed/faded or checkmark overlay)
+- **Progress bar** per panel and overall
+- **Percentage complete** calculation
+- **Save progress** — auto-save completed state separately from design
+
+#### 4.2 Stitch Counter
+- Manual stitch counter (tap to increment)
+- Reset per row, per panel
+- Visual indicator of current row/column while stitching
+
+#### 4.3 Pattern Notes
+- Add notes to specific rows or areas
+- Pin comments to grid coordinates
+- Notes appear as small markers on the grid
+
+---
+
+### FG5: Floss Brands & Library
+
+#### 5.1 Multi-Brand Support
+- **DMC** — 500+ colors (full)
+- **Anchor** — 400+ colors
+- **Madeira Mouline** — 379 colors
+- **DMC Cross Stitch** — DMC's own cross-stitch line
+- **DMC Metallic** — metallic threads
+- **DMC Pearl Cotton** — perlé cotton
+- **Generic/custom** — add any color with hex code
+
+#### 5.2 Color Matching
+- Cross-reference colors across brands
+- "Closest match" when a color isn't in the selected brand
+- Show alternative brands that carry the same shade
+
+#### 5.3 Pattern Library
+- **Browse** — search/filter community patterns
+- **Upload** — share your patterns
+- **Download** — import others' patterns
+- **Categories** — animals, flowers, quotes, landscapes, etc.
+- **Rating & reviews**
+- **Pattern details** — designer, thread count, dimensions, brand, colors used
+
+---
+
+### FG6: Additional Features
+
+#### 6.1 Pattern Repeats
+- Define a block of stitches to repeat
+- Tile horizontally, vertically, or both
+- Preview repeat pattern
+- Export repeat as new pattern
+
+#### 6.2 Mirroring
+- Mirror entire design (left-right, top-bottom)
+- Mirror selection (partial)
+- Mirror and offset (for quilt blocks)
+
+#### 6.3 Semi-Cross Stitches (NEW)
+- Upper-left half, upper-right half, lower-left half, lower-right half
+- Useful for diagonal details in faces, flowers
+- Represented as quarter-symbols in symbol mode
+
+#### 6.4 Watermarks (NEW)
+- Add watermark text to PDF exports
+- "For personal use only"
+- Designer name visible on pattern
+
+#### 6.5 Keyboard Shortcuts
+- Full keyboard shortcut system
+- Configurable shortcuts
+- Common: 1-9 for tool selection, Ctrl+Z undo, Ctrl+S save, etc.
+
+#### 6.6 Responsive Design
+- Desktop: full editor with panels
+- Tablet: simplified editor, touch-friendly
+- Phone: progress tracking + view-only mode
+
+---
+
+## Data Model
+
+```typescript
+interface CrossStitchProject {
+  // Metadata
+  title: string;
+  author: string;
+  description?: string;
+  tags?: string[];
+  category?: string;
+  flossBrand: FlossBrand;
+  fabric: FabricType;
+  stitchCount: { width: number; height: number };
+  created: Date;
+  modified: Date;
+  
+  // Panels
+  panels: Panel[];
+  
+  // Floss library
+  flossLibrary: FlossBrand[];
+  colorSwaps: Map<string, string>; // oldColor -> newColor
+  
+  // Settings
+  settings: {
+    showGridLines: boolean;
+    showAlternatingColors: boolean;
+    showRowLabels: boolean;
+    showColLabels: boolean;
+    gridLineSpacing: number; // every N rows/cols
+    alternatingColorEven: string;
+    alternatingColorOdd: string;
+    labelFontSize: number;
+  };
+  
+  // Progress
+  progress: {
+    completedStitches: Set<string>; // "panelId:row:col"
+    notes: Note[];
+  };
+}
+
+interface Panel {
+  id: string;
+  name: string;
+  shape: 'rectangle' | 'pentagon' | 'hexagon' | 'custom';
+  design: Cell[][]; // 2D grid of Cell objects
+  backstitch: BackstitchLine[];
+  status: 'not-started' | 'in-progress' | 'finished';
+}
+
+interface Cell {
+  colorIndex: number; // index into palette
+  // For semi-cross: partial color info
+  semiCross?: SemiCrossType; // 'upper-left' | 'upper-right' | 'lower-left' | 'lower-right'
+}
+
+type SemiCrossType = 'upper-left' | 'upper-right' | 'lower-left' | 'lower-right';
+
+interface BackstitchLine {
+  id: string;
+  x1: number; y1: number;
+  x2: number; y2: number;
+  color: string; // hex
+  lineWidth: number; // in stitch widths
+}
+
+interface FlossBrand {
+  id: string;
+  name: string;
+  colors: FlossColor[];
+  logo?: string;
+}
+
+interface FlossColor {
+  number: string; // e.g., "824"
+  name: string;   // e.g., "Pine Green"
+  hex: string;     // e.g., "#3D5337"
+  rgb: { r: number; g: number; b: number };
+  crossRefs?: { [brand: string]: string }; // DMC 824 -> Anchor 1182
+}
+
+interface Note {
+  id: string;
+  x?: number; // row
+  y?: number; // col
+  text: string;
+  created: Date;
+}
+```
+
+---
+
+## Technical Stack
+
+- **Framework**: React 19 + TypeScript
+- **Build**: Vite 8
+- **Styling**: Tailwind CSS 4
+- **State**: Zustand (persist with localStorage + optional IndexedDB for large grids)
+- **3D**: React Three Fiber + Three.js (existing)
+- **PDF**: jsPDF + autoTable (existing)
+- **QR Code**: qrcode.react
+- **Color Quantization**: color-quantize (k-means) + custom DMC distance function
+- **Dithering**: Custom Floyd-Steinberg implementation
+- **Icons**: Lucide React (existing)
+- **Virtualization**: react-window for large grids

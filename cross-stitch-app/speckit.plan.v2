@@ -1,0 +1,516 @@
+# Implementation Plan: Cross-Stitch Pattern Studio v2
+
+## Strategy
+
+**CRITICAL FIRST STEP: Fix the grid rendering.** The single most important improvement is multi-weight grid lines with labeled edges. Stitchers count stitches by eye — they look for the darker lines every 5/10 stitches as visual anchors. Without this, the grid is just a sea of tiny cells that's exhausting to navigate.
+
+We'll implement this in **four waves**, each delivering a coherent, usable product:
+
+- **Wave 1 (MVP)**: Multi-weight Grid Lines + Multi-brand Floss + Advanced Image-to-Chart + Backstitch + Enhanced Symbols
+- **Wave 2**: Written Instructions + Progress Tracking + Enhanced Export (QR + Multi-page)
+- **Wave 3**: Advanced Tools (line, shape, dropper, mirror, brush) + Pattern Repeats
+- **Wave 4**: Performance (virtualized rendering) + Semi-cross + Notes + Responsive + Polish
+
+Each wave builds on the previous one. All are compatible with the existing codebase.
+
+---
+
+## Wave 1: MVP (The "Actually Usable" Release)
+
+### Priority Order
+
+1. **Multi-weight grid lines + labels** (022-030) — **THE #1 FIX**. Stitchers count by eye — they need darker lines every 5/10 as visual anchors. Without this, the grid is just a sea of tiny cells.
+2. **Multi-brand floss library** (031-038) — Foundation for everything else
+3. **Advanced image-to-chart** (039-045) — K-Means + dithering
+4. **Backstitch layer** (046-053) — Essential for realistic patterns
+5. **Enhanced symbol system** (054-061) — Customization users expect
+
+### Phase 1.1: Multi-weight Grid Lines + Labels (THE #1 PRIORITY)
+
+**Files to create/modify:**
+- `src/types/gridLines.ts` — Grid line config types
+- `src/components/GridCanvas.tsx` — COMPLETE rewrite of grid rendering
+- `src/store/projectStore.ts` — Add gridLineConfig state
+- `src/components/SettingsPanel.tsx` — Add grid line settings
+
+**The Problem (current state):**
+All grid lines are the same thin weight. No visual hierarchy. At 40x40+ stitch counts, counting is exhausting because you can't quickly find row/column boundaries. The alternating cell colors help but aren't enough.
+
+**The Solution — three visual tiers:**
+
+```
+Tier 1: Light lines — every cell border (0.5px, #e5e7eb) — barely visible
+Tier 2: Medium lines — every 5 stitches (2px, #9ca3af) — creates counting blocks
+Tier 3: Heavy lines — every 10 stitches (3px, #4b5563) — creates major divisions
+```
+
+```typescript
+interface GridLineConfig {
+  lightLineWidth: number;    // 0.5 — every cell
+  lightLineColor: string;    // '#e5e7eb'
+  mediumInterval: number;    // 5 — every N cells
+  mediumLineWidth: number;   // 2
+  mediumLineColor: string;   // '#9ca3af'
+  heavyInterval: number;     // 10
+  heavyLineWidth: number;    // 3
+  heavyLineColor: string;    // '#4b5563'
+}
+
+interface LabelConfig {
+  position: 'left' | 'right' | 'both' | 'none';
+  startNumber: 0 | 1;
+  interval: 1 | 5 | 10;  // show label every N cells
+  fontSize: 'sm' | 'md' | 'lg';
+  fontColor: string;
+  boldAtHeavyLine: boolean;  // make font bolder at heavy line intervals
+  boldAtMediumLine: boolean; // make font slightly bolder at medium
+}
+```
+
+**Rendering approach:**
+- Use CSS `box-shadow: inset` for grid lines — avoids double-line at intersections
+- Three layered divs (light on bottom, medium middle, heavy on top)
+- Labels rendered in a separate layer outside the grid area
+- Label visibility adapts to zoom: at low zoom only show labels at every 10
+- When editing, highlight the current row/column label (make it bold/bright)
+
+**Competitor reference — Stitch Fiddle:**
+```
+    1  2  3  4  5  |  6  7  8  9  10
+    ----------------+-------------------
+1  · · · · · | · · · · · |
+2  · · · · · | · · · · · |
+3  · · · · · | · · · · · |
+4  · · · · · | · · · · · |
+5  · · · · · | · · · · · | ← medium line at col 5
+----+----+----+----+----+----+----+----+----+----
+6  · · · · · | · · · · · | ← heavy line at col 10
+7  · · · · · | · · · · · |
+8  · · · · · | · · · · · |
+9  · · · · · | · · · · · |
+10 · · · · · | · · · · · |
+```
+Heavy lines every 10, medium every 5. Row/col numbers change style at heavy line boundaries.
+
+**Settings UI:**
+- Grid line intervals: medium every [5|10|15|20] cells, heavy every [10|20|30|40] cells
+- Grid line colors: pick for each tier
+- Label position: left only, right only, both, or none
+- Label start: 1-based or 0-based
+- Label show every: 1, 5, or 10 cells
+- Label font size: small / medium / large
+- Show label even when grid lines are off (toggle)
+
+### Phase 1.2: Multi-Brand Floss Library
+
+**Files to create/modify:**
+- `src/utils/flossBrands.ts` — Full color databases for DMC, Anchor, Madeira
+- `src/utils/colorDistance.ts` — Mahalanobis distance + delta-E color matching
+- `src/components/FlossBrandSelector.tsx` — Dropdown in sidebar
+- `src/store/projectStore.ts` — Add `flossBrand` state + cross-ref lookups
+- `src/utils/dmcColors.ts` — Rename to `flossLibrary.ts`, generalize
+
+**Implementation:**
+
+```typescript
+// flossBrands.ts — Full color database
+export interface FlossColor {
+  number: string;      // "824"
+  name: string;        // "Pine Green"
+  hex: string;         // "#3D5337"
+  rgb: { r: number; g: number; b: number };
+}
+
+export interface FlossBrand {
+  id: string;
+  name: string;
+  colors: FlossColor[];
+}
+
+export const FLOSS_BRANDS: Record<string, FlossBrand> = {
+  dmc: { id: 'dmc', name: 'DMC', colors: [...] },
+  anchor: { id: 'anchor', name: 'Anchor', colors: [...] },
+  madeira: { id: 'madeira', name: 'Madeira Mouline', colors: [...] },
+};
+
+// Pre-computed cross-reference table
+export const CROSS_REF: Record<string, Record<string, string>> = {
+  'dmc-824': { anchor: '1182', madeira: 'GL31' },
+  // ... 500+ entries
+};
+```
+
+**Color matching upgrade:**
+
+```typescript
+// colorDistance.ts — Mahalanobis distance
+// Uses the DMC color covariance matrix for perceptually accurate matching
+// Much better than simple Euclidean distance
+export function matchToClosestColor(
+  r: number, g: number, b: number,
+  brand: FlossBrand
+): { color: FlossColor; distance: number } {
+  // Compute Mahalanobis distance in LAB color space
+  // Returns closest match with distance score
+}
+```
+
+**Key changes to existing code:**
+- `projectStore.ts`: Add `flossBrand: string` state, replace `dmcPalette` with `activePalette`
+- All references to `dmcColors.ts` → `flossLibrary.ts`
+- Palette grid in `Sidebar.tsx` → shows current brand's colors
+- Color selection shows brand number + cross-ref to other brands
+
+**Dependencies:** None. Pure utility + UI changes.
+
+---
+
+### Phase 1.3: Advanced Image-to-Chart Conversion
+
+**Files to create/modify:**
+- `src/utils/kMeans.ts` — K-Means++ clustering for color quantization
+- `src/utils/dithering.ts` — Floyd-Steinberg + Sierra dithering
+- `src/utils/imageConverter.ts` — Rewrite to use K-Means + dithering
+- `src/components/ImageConversionPanel.tsx` — UI for new options
+
+**Implementation:**
+
+```typescript
+// kMeans.ts
+export interface ColorCluster {
+  center: [number, number, number]; // RGB
+  members: { x: number; y: number; color: [r,g,b] }[];
+}
+
+export function kMeansCluster(
+  pixels: { x: number; y: number; r: number; g: number; b: number }[],
+  k: number,
+  iterations: number = 20
+): ColorCluster[] {
+  // K-Means++ initialization
+  // Lloyd's algorithm iterations
+  // Returns clusters with representative colors
+}
+
+// dithering.ts
+export interface DitheringOptions {
+  algorithm: 'floyd-steinberg' | 'sierra-3-2-1' | 'none';
+  errorDiffusion: boolean;
+  threshold: number; // 0-1, for threshold-based dithering
+}
+
+export function applyDithering(
+  grid: number[][][], // [[r,g,b], ...]
+  palette: number[][], // target palette RGB values
+  options: DitheringOptions
+): number[][] { // quantized grid indices
+  // Floyd-Steinberg: diffuses error to 4 neighbors
+  // Sierra 3-2-1: lighter diffusion, smoother results
+}
+```
+
+**Image conversion flow (new):**
+
+```
+1. Load image → pixel array (RGBA)
+2. Optional: crop blank borders
+3. Resize to target stitch count
+4. K-Means cluster to N colors
+5. Map clusters to DMC colors (Mahalanobis)
+6. Optional: apply dithering (FS/Sierra)
+7. Post-process: smooth, remove noise
+8. Result: color grid + palette
+```
+
+**UI additions to ImageConversionPanel:**
+- Conversion method selector: "Simple (nearest)" | "K-Means" | "K-Means + Dither"
+- Dithering algorithm selector (when applicable)
+- K value slider (2-128 colors)
+- "Preserve dominant colors" checkbox
+- "Smooth after conversion" toggle
+- Preview panel showing quantized result
+- Before/after comparison slider
+
+**Dependencies:** `kMeans.ts` and `dithering.ts` are pure JS, no external deps needed.
+
+---
+
+### Phase 1.4: Backstitch Layer
+
+**Files to create/modify:**
+- `src/types/backstitch.ts` — Backstitch type definitions
+- `src/store/projectStore.ts` — Add backstitch state
+- `src/components/BackstitchLayer.tsx` — Rendering component
+- `src/components/GridCanvas.tsx` — Integrate backstitch rendering
+- `src/utils/bresenham.ts` — Line drawing algorithm
+
+**Implementation:**
+
+```typescript
+// backstitch.ts
+export interface BackstitchLine {
+  id: string;
+  x1: number; y1: number;
+  x2: number; y2: number;
+  color: string;        // hex color
+  lineWidth: number;    // in stitch widths (1, 1.5, 2, 3)
+}
+
+// bresenham.ts
+export function bresenhamLine(x1: number, y1: number, x2: number, y2: number): {x: number, y: number}[] {
+  // Classic Bresenham algorithm
+  // Returns all grid points along the line
+}
+```
+
+**BackstitchLayer.tsx:**
+
+```tsx
+// Renders SVG lines overlaid on the grid
+// Lines connect stitch centers, drawn with proper line width
+// Toggled via a backstitch tool in the toolbar
+// Lines are stored per-panel in project state
+```
+
+**Changes to existing components:**
+- `GridCanvas.tsx`: Add backstitch SVG overlay layer
+- `Sidebar.tsx`: Add backstitch tool button + properties panel (color, width)
+- `projectStore.ts`: Add `backstitch: BackstitchLine[]` to Panel, add actions for creating/deleting lines
+- `projectIO.ts`: Serialize/deserialize backstitch data
+- `PDFGenerator.ts`: Render backstitch lines as solid paths
+
+**Drawing tool integration:**
+- When backstitch tool is active, drawing creates line segments
+- Click to set start point, click again for end point
+- Lines are drawn as SVG `<line>` elements overlaid on the grid
+- Line preview follows cursor while drawing
+
+---
+
+### Phase 1.5: Enhanced Symbol System
+
+**Files to create/modify:**
+- `src/utils/symbolSystem.ts` — Symbol assignment and management
+- `src/components/SymbolEditor.tsx` — Symbol editing UI
+- `src/store/projectStore.ts` — Add symbol state
+- `src/components/GridCanvas.tsx` — Enhanced symbol rendering
+- `PDFGenerator.ts` — Enhanced legend with custom symbols
+
+**Implementation:**
+
+```typescript
+// symbolSystem.ts
+export type SymbolStyle = 'circle' | 'square' | 'triangle' | 'diamond' | 'star' | 'heart' | 'cross' | 'dot' | 'none';
+
+export interface SymbolDefinition {
+  character: string;  // Unicode char
+  style: SymbolStyle;
+  size: number;       // relative to cell
+  fill?: string;      // override fill color
+  stroke?: string;    // override stroke color
+}
+
+export function generateSymbolMap(
+  grid: number[][],
+  existing?: Map<number, SymbolDefinition>
+): Map<number, SymbolDefinition> {
+  // Auto-generate symbols, preserving user-assigned ones
+  // Cycles through: A-Z, a-z, 0-9, Greek, special chars
+}
+
+export function assignCustomSymbol(
+  colorIndex: number,
+  character: string,
+  style: SymbolStyle
+): SymbolDefinition
+```
+
+**Symbol Editor component:**
+- Appears when you click a color in the palette
+- Shows current symbol assignment
+- Input field for custom character
+- Dropdown for symbol style
+- Size slider
+- Live preview of the symbol at current zoom level
+- "Clear symbol" button (solid blocks)
+
+**Rendering changes:**
+- GridCanvas: symbols now render as text with font styling + SVG shapes for special styles
+- Symbol rendering is optimized (cached as SVG sprites for common shapes)
+- PDF legend: shows symbol shape + DMC number + name
+
+---
+
+## Wave 2: The "Stitcher-Ready" Release
+
+### Phase 2.1: Written Chart Instructions
+
+**Files to create:**
+- `src/utils/writtenInstructions.ts` — Generate text descriptions
+- `src/components/WrittenInstructionsPanel.tsx` — Display/export UI
+
+**Flow:**
+```
+For each row:
+  Group consecutive same-color stitches
+  Generate: "Row N: 3×BL, 5×RD, 2×BL, 8×WH"
+  Apply abbreviation dictionary
+  Format for PDF export
+```
+
+### Phase 2.2: Progress Tracking
+
+**Files to create/modify:**
+- `src/store/projectStore.ts` — Add `completedStitches: Set<string>`
+- `src/components/ProgressTracker.tsx` — UI component
+- `src/components/GridCanvas.tsx` — Handle shift-click for completed state
+
+### Phase 2.3: Enhanced Export
+
+**Files to create/modify:**
+- `src/utils/qrCode.ts` — QR code generation wrapper
+- `src/utils/multiPagePDF.ts` — Split large patterns across pages
+- `PDFGenerator.ts` — Enhanced with labels, QR, watermarks
+
+---
+
+## Wave 3: The "Power User" Release
+
+### Phase 3.1: Advanced Tools
+
+**Files to create:**
+- `src/utils/tools/line.ts` — Bresenham line tool
+- `src/utils/tools/shape.ts` — Rectangle/circle drawing
+- `src/utils/tools/dropper.ts` — Color picker from canvas
+- `src/utils/tools/transform.ts` — Mirror, flip, copy, paste
+
+### Phase 3.2: Pattern Repeats
+
+**Files to create:**
+- `src/utils/repeat.ts` — Tile patterns
+- `src/components/RepeatPreview.tsx` — Visual preview
+
+---
+
+## Wave 4: The "Professional" Release
+
+### Phase 4.1: Performance
+
+- Virtualized grid rendering (react-window or custom)
+- WebGL grid rendering (canvas-based)
+- IndexedDB for large project persistence
+
+### Phase 4.2: Semi-Cross Stitches
+
+- Quarter-cell rendering
+- Semi-cross symbols
+
+### Phase 4.3: Notes & Responsive
+
+- Note system
+- Touch-friendly layout
+- Dark theme
+
+---
+
+## File Structure (v2)
+
+```
+src/
+├── utils/
+│   ├── flossBrands.ts          ← NEW: multi-brand databases
+│   ├── colorDistance.ts        ← NEW: Mahalanobis distance
+│   ├── kMeans.ts               ← NEW: K-Means clustering
+│   ├── dithering.ts            ← NEW: FS + Sierra dithering
+│   ├── bresenham.ts            ← NEW: line drawing
+│   ├── writtenInstructions.ts  ← NEW: text generation
+│   ├── qrCode.ts               ← NEW: QR generation
+│   ├── symbolSystem.ts         ← NEW: symbol management
+│   ├── repeat.ts               ← NEW: pattern repeats
+│   ├── dmcColors.ts            ← RENAME to flossLibrary.ts
+│   ├── imageConverter.ts       ← MODIFY: use K-Means
+│   ├── PDFGenerator.ts         ← MODIFY: enhanced export
+│   ├── projectIO.ts            ← MODIFY: new data model
+│   └── pentagonUtils.ts        ← keep
+├── types/
+│   ├── backstitch.ts           ← NEW
+│   └── project.ts              ← MODULARIZE from store
+├── components/
+│   ├── FlossBrandSelector.tsx  ← NEW
+│   ├── BackstitchLayer.tsx     ← NEW
+│   ├── SymbolEditor.tsx        ← NEW
+│   ├── WrittenInstructionsPanel.tsx ← NEW
+│   ├── ProgressTracker.tsx     ← NEW
+│   ├── RepeatPreview.tsx       ← NEW
+│   ├── GridCanvas.tsx          ← MODIFY: many additions
+│   ├── Sidebar.tsx             ← MODIFY: new tools
+│   ├── ImageConversionPanel.tsx ← MODIFY: new options
+│   ├── Header.tsx              ← MODIFY: new exports
+│   ├── SettingsPanel.tsx       ← keep
+│   ├── InventoryPanel.tsx      ← keep
+│   ├── MainCanvas.tsx          ← keep
+│   └── RightPanel.tsx          ← keep
+├── store/
+│   ├── projectStore.ts         ← MODIFY: new state + actions
+│   └── performance.ts          ← NEW: IndexedDB persistence
+└── utils/tools/
+    ├── line.ts                 ← NEW
+    ├── shape.ts                ← NEW
+    ├── dropper.ts              ← NEW
+    └── transform.ts            ← NEW
+```
+
+---
+
+## Migration Notes
+
+### Breaking Changes
+- `dmcColors.ts` → `flossLibrary.ts` — update all imports
+- Store shape changes: add `flossBrand`, `backstitch`, `completedStitches` — new projects fine, old projects get defaults
+- PDF format changes: new fields in JSON export, backward-compatible import
+
+### Non-Breaking
+- All new components opt-in (toggle features on/off)
+- Old projects load fine with new code (missing fields get defaults)
+- Existing v1 projects remain compatible
+
+---
+
+## Estimated Effort
+
+| Phase | Files Changed | Complexity | Est. Hours |
+|-------|--------------|------------|------------|
+| Wave 1: Grid Lines | 4 files | Medium | 8h |
+| Wave 1: Multi-Brand | 6 files | Medium | 8h |
+| Wave 1: Image-to-Chart | 4 files | High | 12h |
+| Wave 1: Backstitch | 5 files | Medium | 10h |
+| Wave 1: Symbols | 4 files | Medium | 8h |
+| **Wave 1 Total** | | | **~42h** |
+| Wave 2: Instructions | 2 files | Low | 4h |
+| Wave 2: Progress | 3 files | Medium | 8h |
+| Wave 2: Export | 3 files | Medium | 6h |
+| **Wave 2 Total** | | | **~18h** |
+| Wave 3: Tools | 5 files | High | 16h |
+| Wave 3: Repeats | 2 files | Medium | 6h |
+| **Wave 3 Total** | | | **~22h** |
+| Wave 4: Performance | 4 files | High | 20h |
+| Wave 4: Semi-Cross | 3 files | Medium | 8h |
+| Wave 4: Notes/Responsive | 5 files | Medium | 12h |
+| **Wave 4 Total** | | | **~40h** |
+| **Grand Total** | | | **~118h** |
+
+---
+
+## Suggested Implementation Order
+
+1. **Start with multi-weight grid lines + labels** — THIS IS THE #1 FIX. Without it, the grid is unusable for actual counting. This is what stitchers see first and interact with constantly.
+2. **Then multi-brand** — foundation for color work, touches least code
+3. **Then image-to-chart** — biggest user-visible improvement
+4. **Then backstitch** — essential for professional patterns
+5. **Then symbols** — nice-to-have polish
+6. **Then written instructions** — unique selling point
+7. **Then progress tracking** — stitching workflow
+8. **Then advanced tools** — power user features
+9. **Then performance** — scale to large patterns
+10. **Then semi-cross + notes** — finishing touches
+11. **Then responsive + dark theme** — delivery polish

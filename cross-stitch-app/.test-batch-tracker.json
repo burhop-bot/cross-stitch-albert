@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "last_run": "2026-05-11T14:56:34.615341+00:00",
+  "total_iterations": 3,
+  "files": {
+    "tests/e2e/image-conversion-undo-redo.spec.ts": {
+      "attempts": 3,
+      "last_patch_applied": null,
+      "last_patch_reverted": true,
+      "last_error": "undo stack count off by 1"
+    }
+  },
+  "pending": [
+    "e2e/image-conversion-undo-redo.spec.ts"
+  ],
+  "completed": [
+    "tests/e2e/app-shell.spec.ts",
+    "tests/e2e/image-conversion-undo-redo.spec.ts"
+  ],
+  "stalled": []
+}
