@@ -6,17 +6,17 @@
 
 # Test info
 
-- Name: e2e/_debug3.spec.ts >> debug3
-- Location: tests/e2e/_debug3.spec.ts:3:5
+- Name: e2e/color-history-panel.spec.ts >> Color History Panel >> history preserves maximum 20 entries
+- Location: tests/e2e/color-history-panel.spec.ts:311:7
 
 # Error details
 
 ```
-Test timeout of 60000ms exceeded.
+Test timeout of 30000ms exceeded.
 ```
 
 ```
-Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open '/sandbox/.openclaw-data/workspace/cross-stitch-app/test-results/.playwright-artifacts-4/traces/1988a8156f39c2b861a5-27eb5094aa68664600dc-recording1.trace'
+Error: page.waitForTimeout: Test timeout of 30000ms exceeded.
 ```
 
 # Page snapshot
@@ -168,7 +168,7 @@ Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open '
                 - generic: "19"
               - button "22" [ref=e177]:
                 - generic: "22"
-              - button "23" [ref=e178]:
+              - button "23" [active] [ref=e178]:
                 - generic: "23"
               - button "24" [ref=e179]:
                 - generic: "24"
@@ -185,8 +185,8 @@ Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open '
               - button "33" [ref=e185]:
                 - generic: "33"
             - generic [ref=e189]:
-              - generic [ref=e190]: DMC 1
-              - generic [ref=e191]: White
+              - generic [ref=e190]: DMC 23
+              - generic [ref=e191]: Salmon
     - main [ref=e193]:
       - generic [ref=e194]:
         - generic [ref=e195]: Panel 1
@@ -377,4 +377,212 @@ Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open '
               - generic [ref=e2071]: "40"
       - button "Pattern Repeat" [ref=e2072]:
         - img [ref=e2073]
+        - generic [ref=e2077]: Pattern Repeat
+```
+
+# Test source
+
+```ts
+  219 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  220 |     await btn.click()
+  221 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  222 |     // Click the first swatch (25) — it should become active
+  223 |     await (getSwatches(page)).filter({ hasText: '25' }).first().click()
+  224 |     await page.waitForTimeout(300)
+  225 |     // Reopen and verify 25 is still first
+  226 |     await btn.click()
+  227 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  228 |     const firstSwatch = getSwatches(page).filter({ hasText: '25' }).first()
+  229 |     await expect(firstSwatch).toBeVisible()
+  230 |   })
+  231 | 
+  232 |   // --- Close behavior ---
+  233 | 
+  234 |   test('close button (✕) hides the color history panel', async ({ page }) => {
+  235 |     // Select a color
+  236 |     const paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  237 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  238 |       const text = await paletteButtons.nth(i).textContent()
+  239 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  240 |     }
+  241 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  242 |     await btn.click()
+  243 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  244 |     const closeBtn = page.locator('button').filter({ hasText: '✕' }).first()
+  245 |     await expect(closeBtn).toBeVisible()
+  246 |     await closeBtn.click()
+  247 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toHaveCount(0)
+  248 |   })
+  249 | 
+  250 |   test('clicking outside the panel closes it', async ({ page }) => {
+  251 |     // Select a color
+  252 |     const paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  253 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  254 |       const text = await paletteButtons.nth(i).textContent()
+  255 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  256 |     }
+  257 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  258 |     await btn.click()
+  259 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  260 |     // Click on the main canvas to close
+  261 |     await page.locator('main').first().click()
+  262 |     await page.waitForTimeout(300)
+  263 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toHaveCount(0)
+  264 |   })
+  265 | 
+  266 |   test('reopening "Recent" button shows the panel again', async ({ page }) => {
+  267 |     // Select a color
+  268 |     const paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  269 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  270 |       const text = await paletteButtons.nth(i).textContent()
+  271 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  272 |     }
+  273 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  274 |     await btn.click()
+  275 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  276 |     // Close it
+  277 |     await page.locator('button').filter({ hasText: '✕' }).first().click()
+  278 |     await page.waitForTimeout(200)
+  279 |     // Reopen
+  280 |     await btn.click()
+  281 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  282 |   })
+  283 | 
+  284 |   // --- LRU behavior ---
+  285 | 
+  286 |   test('re-selecting a color moves it to the front', async ({ page }) => {
+  287 |     // Select 15, then 25, then 15 again
+  288 |     let paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  289 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  290 |       const text = await paletteButtons.nth(i).textContent()
+  291 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  292 |     }
+  293 |     paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  294 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  295 |       const text = await paletteButtons.nth(i).textContent()
+  296 |       if (text && text.includes('25')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  297 |     }
+  298 |     paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  299 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  300 |       const text = await paletteButtons.nth(i).textContent()
+  301 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  302 |     }
+  303 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  304 |     await btn.click()
+  305 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  306 |     // 15 should be first (most recently selected)
+  307 |     const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
+  308 |     await expect(firstSwatch).toBeVisible()
+  309 |   })
+  310 | 
+  311 |   test('history preserves maximum 20 entries', async ({ page }) => {
+  312 |     const validColors = [1,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]
+  313 |     for (const num of validColors) {
+  314 |       const paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  315 |       for (let i = 0; i < await paletteButtons.count(); i++) {
+  316 |         const text = await paletteButtons.nth(i).textContent()
+  317 |         if (text && text.includes(String(num))) {
+  318 |           await paletteButtons.nth(i).click()
+> 319 |           await page.waitForTimeout(200)
+      |                      ^ Error: page.waitForTimeout: Test timeout of 30000ms exceeded.
+  320 |           break
+  321 |         }
+  322 |       }
+  323 |     }
+  324 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  325 |     await btn.click()
+  326 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  327 |     const swatches = getSwatches(page)
+  328 |     const count = await swatches.count()
+  329 |     expect(count).toBeLessThanOrEqual(20)
+  330 |   })
+  331 | 
+  332 |   test('oldest entry is evicted when history exceeds 20', async ({ page }) => {
+  333 |     const validColors = [1,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]
+  334 |     for (let i = 0; i < 20; i++) {
+  335 |       const paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  336 |       for (let j = 0; j < await paletteButtons.count(); j++) {
+  337 |         const text = await paletteButtons.nth(j).textContent()
+  338 |         if (text && text.includes(String(validColors[i]))) {
+  339 |           await paletteButtons.nth(j).click()
+  340 |           await page.waitForTimeout(200)
+  341 |           break
+  342 |         }
+  343 |       }
+  344 |     }
+  345 |     // Add 33 (should evict 1)
+  346 |     const paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  347 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  348 |       const text = await paletteButtons.nth(i).textContent()
+  349 |       if (text && text.includes('33')) {
+  350 |         await paletteButtons.nth(i).click()
+  351 |         await page.waitForTimeout(200)
+  352 |         break
+  353 |       }
+  354 |     }
+  355 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  356 |     await btn.click()
+  357 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  358 |     const swatches = getSwatches(page)
+  359 |     await expect(swatches).toHaveCount(20)
+  360 |     // First should be 33, last should NOT be 1
+  361 |     const lastSwatch = swatches.last()
+  362 |     const lastTitle = await lastSwatch.getAttribute('title')
+  363 |     expect(lastTitle).not.toContain('DMC 1 ')
+  364 |   })
+  365 | 
+  366 |   // --- Interaction with other features ---
+  367 | 
+  368 |   test('color history survives right panel tab switching', async ({ page }) => {
+  369 |     // Select color 15
+  370 |     let paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  371 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  372 |       const text = await paletteButtons.nth(i).textContent()
+  373 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  374 |     }
+  375 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  376 |     await btn.click()
+  377 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  378 |     // Switch panels
+  379 |     const panelBtn = page.locator('button').filter({ hasText: 'Panel' }).first()
+  380 |     if (await panelBtn.count() > 0) {
+  381 |       await panelBtn.click()
+  382 |       await page.waitForTimeout(300)
+  383 |     }
+  384 |     const projectTab = page.locator('button').filter({ hasText: 'Project' }).first()
+  385 |     if (await projectTab.count() > 0) await projectTab.click()
+  386 |     await page.waitForTimeout(200)
+  387 |     // Reopen color history
+  388 |     await btn.click()
+  389 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  390 |     const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
+  391 |     await expect(firstSwatch).toBeVisible()
+  392 |   })
+  393 | 
+  394 |   test('placing a stitch adds the color to history automatically', async ({ page }) => {
+  395 |     // Select color 15
+  396 |     let paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  397 |     for (let i = 0; i < await paletteButtons.count(); i++) {
+  398 |       const text = await paletteButtons.nth(i).textContent()
+  399 |       if (text && text.includes('15')) { await paletteButtons.nth(i).click(); await page.waitForTimeout(300); break }
+  400 |     }
+  401 |     // Click on grid cell to place a stitch
+  402 |     const cells = page.locator('[data-cell]')
+  403 |     if (await cells.count() > 0) {
+  404 |       await cells.first().click()
+  405 |       await page.waitForTimeout(200)
+  406 |     }
+  407 |     const btn = page.locator('button').filter({ hasText: '🎨 Recent' }).first()
+  408 |     await btn.click()
+  409 |     await expect(page.locator('h3').filter({ hasText: 'Recently Used Colors' })).toBeVisible({ timeout: 3000 })
+  410 |     const firstSwatch = getSwatches(page).filter({ hasText: '15' }).first()
+  411 |     await expect(firstSwatch).toBeVisible()
+  412 |   })
+  413 | 
+  414 |   // --- Brand switching compatibility ---
+  415 | 
+  416 |   test('color history swatches show correct hex for non-DMC brands', async ({ page }) => {
+  417 |     // Select color 15
+  418 |     let paletteButtons = page.locator('aside button.aspect-square.rounded-lg')
+  419 |     for (let i = 0; i < await paletteButtons.count(); i++) {
 ```

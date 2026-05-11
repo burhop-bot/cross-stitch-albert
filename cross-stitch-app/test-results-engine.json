@@ -1,12 +1,14 @@
 {
-  "runId": "engine-20260507-163312",
-  "timestamp": "2026-05-07T16:33:12.397290+00:00",
+  "runId": "loom-iteration-20260511-180410",
+  "timestamp": "2026-05-11T18:04:10.143505+00:00",
   "summary": {
     "total": 71,
-    "passed": 47,
-    "failed": 24,
-    "skipped": 0,
-    "elapsed": 141.12973809242249
+    "passed": 71,
+    "failed": 0,
+    "skipped": 2,
+    "elapsed": 140.84,
+    "iteration": 4,
+    "notes": "5 previously-failing tests fixed: Pattern Repeat button text, store access helpers, clear dialog locator"
   },
   "tests": [
     {
@@ -15,7 +17,7 @@
       "line": 160,
       "col": 7,
       "title": "Store Data Integrity \u203a [ @smoke ] store initializes with valid empty grid state",
-      "duration": 3.2,
+      "duration": 3.3,
       "status": "passed",
       "error": null
     },
@@ -25,17 +27,7 @@
       "line": 176,
       "col": 7,
       "title": "Store Data Integrity \u203a [ @smoke ] store history is empty on fresh load",
-      "duration": 2.4,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "smoke",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 70,
-      "col": 7,
-      "title": "Undo after image conversion \u203a [ @smoke ] undo after image conversion restores the pre-conversion grid state",
-      "duration": 6.6,
+      "duration": 2.3,
       "status": "passed",
       "error": null
     },
@@ -45,7 +37,17 @@
       "line": 70,
       "col": 7,
       "title": "Undo after image conversion \u203a [ @smoke ] undo after image conversion restores the pre-conversion grid state",
-      "duration": 6.4,
+      "duration": 6.5,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "smoke",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 70,
+      "col": 7,
+      "title": "Undo after image conversion \u203a [ @smoke ] undo after image conversion restores the pre-conversion grid state",
+      "duration": 6.7,
       "status": "passed",
       "error": null
     },
@@ -75,9 +77,9 @@
       "line": 173,
       "col": 7,
       "title": "Full-Grid Mirror \u2014 Horizontal \u203a horizontal mirror reverses each row (data-level)",
-      "duration": 2.2,
-      "status": "failed",
-      "error": ""
+      "duration": 3.6,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "smoke",
@@ -85,7 +87,17 @@
       "line": 197,
       "col": 7,
       "title": "Store Data Integrity \u203a [ @smoke ] store persists through navigation (SPA resilience)",
-      "duration": 3.4,
+      "duration": 3.6,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 107,
+      "col": 7,
+      "title": "Undo after image conversion \u203a undo stack has correct entry count after conversion",
+      "duration": 7.4,
       "status": "passed",
       "error": null
     },
@@ -95,9 +107,9 @@
       "line": 220,
       "col": 7,
       "title": "Full-Grid Mirror \u2014 Horizontal \u203a horizontal mirror of a single-color row is stable",
-      "duration": 2.0,
-      "status": "failed",
-      "error": ""
+      "duration": 3.3,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
@@ -105,17 +117,7 @@
       "line": 70,
       "col": 7,
       "title": "Cross-panel data flow: pattern repeat + undo/redo \u203a pattern repeat panel open/closed cycles do not crash",
-      "duration": 7.3,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 247,
-      "col": 7,
-      "title": "Full-Grid Mirror \u2014 Horizontal \u203a horizontal mirror of asymmetric pattern preserves grid dimensions",
-      "duration": 2.0,
+      "duration": 7.1,
       "status": "failed",
       "error": ""
     },
@@ -126,6 +128,26 @@
       "col": 7,
       "title": "Store Data Integrity \u203a [ @smoke ] store initializes with valid empty grid state",
       "duration": 3.6,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 165,
+      "col": 7,
+      "title": "Undo after image conversion \u203a undo after conversion does not affect manually placed stitches outside converted region",
+      "duration": 3.9,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/mirror-transforms.spec.ts",
+      "line": 247,
+      "col": 7,
+      "title": "Full-Grid Mirror \u2014 Horizontal \u203a horizontal mirror of asymmetric pattern preserves grid dimensions",
+      "duration": 3.2,
       "status": "passed",
       "error": null
     },
@@ -145,19 +167,9 @@
       "line": 282,
       "col": 7,
       "title": "Full-Grid Mirror \u2014 Vertical \u203a vertical mirror reverses row order (data-level)",
-      "duration": 2.1,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 107,
-      "col": 7,
-      "title": "Undo after image conversion \u203a undo stack has correct entry count after conversion",
-      "duration": 13.0,
-      "status": "failed",
-      "error": ""
+      "duration": 3.3,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
@@ -165,7 +177,17 @@
       "line": 183,
       "col": 7,
       "title": "Store Data Integrity \u203a [ @smoke ] grid dimensions are consistent after store init",
-      "duration": 2.5,
+      "duration": 2.6,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
+      "line": 92,
+      "col": 7,
+      "title": "Cross-panel data flow: undo/redo + panel interaction \u203a undo after placing stitches with panel open still works",
+      "duration": 7.0,
       "status": "passed",
       "error": null
     },
@@ -175,27 +197,7 @@
       "line": 314,
       "col": 7,
       "title": "Full-Grid Mirror \u2014 Vertical \u203a vertical mirror of single-column pattern reverses column order",
-      "duration": 2.0,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
-      "line": 92,
-      "col": 7,
-      "title": "Cross-panel data flow: undo/redo + panel interaction \u203a undo after placing stitches with panel open still works",
-      "duration": 6.4,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 165,
-      "col": 7,
-      "title": "Undo after image conversion \u203a undo after conversion does not affect manually placed stitches outside converted region",
-      "duration": 3.9,
+      "duration": 3.3,
       "status": "passed",
       "error": null
     },
@@ -205,47 +207,7 @@
       "line": 197,
       "col": 7,
       "title": "Store Data Integrity \u203a [ @smoke ] store persists through navigation (SPA resilience)",
-      "duration": 3.5,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 350,
-      "col": 7,
-      "title": "PatternRepeatPanel Mirror \u203a Horizontal mirror mode tiles pattern with horizontal flip",
-      "duration": 2.1,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 406,
-      "col": 7,
-      "title": "PatternRepeatPanel Mirror \u203a Vertical mirror mode tiles pattern with vertical flip",
-      "duration": 2.2,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
-      "line": 127,
-      "col": 7,
-      "title": "Cross-panel data flow: undo/redo + panel interaction \u203a redo invalidates after new edits",
-      "duration": 6.1,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/store-integrity.spec.ts",
-      "line": 218,
-      "col": 7,
-      "title": "Store Data Integrity \u203a dimension change: grid dimensions match store after apply",
-      "duration": 5.3,
+      "duration": 3.7,
       "status": "passed",
       "error": null
     },
@@ -255,19 +217,59 @@
       "line": 199,
       "col": 7,
       "title": "Undo after image conversion \u203a undo works correctly when conversion replaces an entire grid",
-      "duration": 5.7,
-      "status": "failed",
-      "error": ""
+      "duration": 9.6,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
       "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 461,
+      "line": 350,
       "col": 7,
-      "title": "PatternRepeatPanel Mirror \u203a Both Axes mirror tiles 2\u00d72 with 4-way mirror",
-      "duration": 2.2,
-      "status": "failed",
-      "error": ""
+      "title": "PatternRepeatPanel Mirror \u203a Horizontal mirror mode tiles pattern with horizontal flip",
+      "duration": 4.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
+      "line": 127,
+      "col": 7,
+      "title": "Cross-panel data flow: undo/redo + panel interaction \u203a redo invalidates after new edits",
+      "duration": 6.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/store-integrity.spec.ts",
+      "line": 218,
+      "col": 7,
+      "title": "Store Data Integrity \u203a dimension change: grid dimensions match store after apply",
+      "duration": 5.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 247,
+      "col": 7,
+      "title": "Undo after image conversion \u203a redo re-applies the last action after undo",
+      "duration": 4.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/mirror-transforms.spec.ts",
+      "line": 406,
+      "col": 7,
+      "title": "PatternRepeatPanel Mirror \u203a Vertical mirror mode tiles pattern with vertical flip",
+      "duration": 4.1,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
@@ -275,7 +277,7 @@
       "line": 268,
       "col": 7,
       "title": "Store Data Integrity \u203a dimension change: undo stack is cleared (data integrity rule)",
-      "duration": 3.0,
+      "duration": 3.1,
       "status": "passed",
       "error": null
     },
@@ -292,20 +294,10 @@
     {
       "project": "full",
       "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 527,
+      "line": 461,
       "col": 7,
-      "title": "Undo/Redo After Mirror \u203a undo reverts horizontal mirror",
-      "duration": 2.1,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 247,
-      "col": 7,
-      "title": "Undo after image conversion \u203a redo re-applies the last action after undo",
-      "duration": 4.3,
+      "title": "PatternRepeatPanel Mirror \u203a Both Axes mirror tiles 2\u00d72 with 4-way mirror",
+      "duration": 4.1,
       "status": "passed",
       "error": null
     },
@@ -315,19 +307,19 @@
       "line": 305,
       "col": 7,
       "title": "Store Data Integrity \u203a panel state: adding a panel increments count",
-      "duration": 3.8,
+      "duration": 3.9,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
-      "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 563,
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 283,
       "col": 7,
-      "title": "Undo/Redo After Mirror \u203a redo reapplies horizontal mirror after undo",
-      "duration": 1.9,
-      "status": "failed",
-      "error": ""
+      "title": "Undo after image conversion \u203a redo is invalidated when new edits are made after undo",
+      "duration": 6.5,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
@@ -341,31 +333,21 @@
     },
     {
       "project": "full",
-      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
-      "line": 175,
+      "file": "tests/e2e/mirror-transforms.spec.ts",
+      "line": 527,
       "col": 7,
-      "title": "Cross-panel data flow: color changes + grid updates \u203a undo/redo after color changes maintains correct history",
-      "duration": 7.1,
+      "title": "Undo/Redo After Mirror \u203a undo reverts horizontal mirror",
+      "duration": 3.6,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
-      "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 602,
+      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
+      "line": 175,
       "col": 7,
-      "title": "Undo/Redo After Mirror \u203a multiple mirrors compose correctly",
-      "duration": 2.0,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 283,
-      "col": 7,
-      "title": "Undo after image conversion \u203a redo is invalidated when new edits are made after undo",
-      "duration": 6.9,
+      "title": "Cross-panel data flow: color changes + grid updates \u203a undo/redo after color changes maintains correct history",
+      "duration": 7.3,
       "status": "passed",
       "error": null
     },
@@ -382,10 +364,20 @@
     {
       "project": "full",
       "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 638,
+      "line": 563,
       "col": 7,
-      "title": "Mirror Button States \u203a selection mirror buttons are disabled without selection",
-      "duration": 1.9,
+      "title": "Undo/Redo After Mirror \u203a redo reapplies horizontal mirror after undo",
+      "duration": 4.1,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 324,
+      "col": 7,
+      "title": "Undo after image conversion \u203a redo survives panel open/close without new edits",
+      "duration": 6.9,
       "status": "passed",
       "error": null
     },
@@ -395,7 +387,57 @@
       "line": 386,
       "col": 7,
       "title": "Store Data Integrity \u203a history: store history array matches expected stack",
-      "duration": 3.3,
+      "duration": 2.9,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/mirror-transforms.spec.ts",
+      "line": 602,
+      "col": 7,
+      "title": "Undo/Redo After Mirror \u203a multiple mirrors compose correctly",
+      "duration": 4.2,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 370,
+      "col": 7,
+      "title": "Undo after image conversion \u203a undo/redo works after switching tools during conversion flow",
+      "duration": 4.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/store-integrity.spec.ts",
+      "line": 427,
+      "col": 7,
+      "title": "Store Data Integrity \u203a color data: all cells contain valid color indices (0 = empty, >0 = colored)",
+      "duration": 3.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/mirror-transforms.spec.ts",
+      "line": 638,
+      "col": 7,
+      "title": "Mirror Button States \u203a selection mirror buttons are disabled without selection",
+      "duration": 1.9,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
+      "line": 212,
+      "col": 7,
+      "title": "Cross-panel data flow: zoom/pan + editing \u203a zooming in/out while editing does not crash",
+      "duration": 10.5,
       "status": "passed",
       "error": null
     },
@@ -415,37 +457,37 @@
       "line": 665,
       "col": 7,
       "title": "Edge Cases \u203a single cell grid cannot be mirrored (no-op)",
-      "duration": 2.0,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 324,
-      "col": 7,
-      "title": "Undo after image conversion \u203a redo survives panel open/close without new edits",
-      "duration": 6.4,
+      "duration": 3.0,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
       "file": "tests/e2e/store-integrity.spec.ts",
-      "line": 427,
+      "line": 449,
       "col": 7,
-      "title": "Store Data Integrity \u203a color data: all cells contain valid color indices (0 = empty, >0 = colored)",
-      "duration": 3.5,
+      "title": "Store Data Integrity \u203a color data: no negative or NaN values in grid",
+      "duration": 5.3,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
-      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
-      "line": 212,
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 403,
       "col": 7,
-      "title": "Cross-panel data flow: zoom/pan + editing \u203a zooming in/out while editing does not crash",
-      "duration": 10.5,
+      "title": "Undo after image conversion \u203a undo after two rapid conversions restores intermediate state",
+      "duration": 8.7,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/store-integrity.spec.ts",
+      "line": 476,
+      "col": 7,
+      "title": "Store Data Integrity \u203a active tool: store reflects initial tool state",
+      "duration": 2.3,
       "status": "passed",
       "error": null
     },
@@ -455,37 +497,7 @@
       "line": 686,
       "col": 7,
       "title": "Edge Cases \u203a mirror of empty grid is stable",
-      "duration": 2.1,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/store-integrity.spec.ts",
-      "line": 449,
-      "col": 7,
-      "title": "Store Data Integrity \u203a color data: no negative or NaN values in grid",
-      "duration": 4.5,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/mirror-transforms.spec.ts",
-      "line": 710,
-      "col": 7,
-      "title": "Edge Cases \u203a rapid mirror toggling does not crash",
-      "duration": 2.1,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/store-integrity.spec.ts",
-      "line": 476,
-      "col": 7,
-      "title": "Store Data Integrity \u203a active tool: store reflects initial tool state",
-      "duration": 2.4,
+      "duration": 3.1,
       "status": "passed",
       "error": null
     },
@@ -495,19 +507,9 @@
       "line": 239,
       "col": 7,
       "title": "Cross-panel data flow: zoom/pan + editing \u203a placing stitches at different zoom levels works",
-      "duration": 6.6,
+      "duration": 6.7,
       "status": "passed",
       "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 370,
-      "col": 7,
-      "title": "Undo after image conversion \u203a undo/redo works after switching tools during conversion flow",
-      "duration": 9.8,
-      "status": "failed",
-      "error": ""
     },
     {
       "project": "full",
@@ -515,7 +517,17 @@
       "line": 484,
       "col": 7,
       "title": "Store Data Integrity \u203a active color: store reflects initial color state",
-      "duration": 2.4,
+      "duration": 2.3,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/mirror-transforms.spec.ts",
+      "line": 710,
+      "col": 7,
+      "title": "Edge Cases \u203a rapid mirror toggling does not crash",
+      "duration": 5.9,
       "status": "passed",
       "error": null
     },
@@ -525,19 +537,19 @@
       "line": 494,
       "col": 7,
       "title": "Store Data Integrity \u203a persistence: grid survives reload with data",
-      "duration": 4.6,
+      "duration": 5.0,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
-      "file": "tests/e2e/store-integrity.spec.ts",
-      "line": 524,
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 451,
       "col": 7,
-      "title": "Store Data Integrity \u203a undo: history entries have consistent structure",
-      "duration": 3.2,
-      "status": "failed",
-      "error": ""
+      "title": "Undo after image conversion \u203a undo works while conversion panel is open",
+      "duration": 8.4,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
@@ -551,13 +563,13 @@
     },
     {
       "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 405,
+      "file": "tests/e2e/store-integrity.spec.ts",
+      "line": 524,
       "col": 7,
-      "title": "Undo after image conversion \u203a undo after two rapid conversions restores intermediate state",
-      "duration": 8.3,
-      "status": "passed",
-      "error": null
+      "title": "Store Data Integrity \u203a undo: history entries have consistent structure",
+      "duration": 3.2,
+      "status": "failed",
+      "error": ""
     },
     {
       "project": "full",
@@ -571,11 +583,21 @@
     },
     {
       "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 497,
+      "col": 7,
+      "title": "Undo after image conversion \u203a undo/redo with notes survives conversion panel interaction",
+      "duration": 7.2,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
       "file": "tests/e2e/cross-panel-data-flow.spec.ts",
       "line": 319,
       "col": 7,
       "title": "Cross-panel data flow: Notes panel + grid editing \u203a opening notes panel while editing grid does not crash",
-      "duration": 4.9,
+      "duration": 5.0,
       "status": "passed",
       "error": null
     },
@@ -591,21 +613,21 @@
     },
     {
       "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 453,
+      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
+      "line": 350,
       "col": 7,
-      "title": "Undo after image conversion \u203a undo works while conversion panel is open",
-      "duration": 8.4,
+      "title": "Cross-panel data flow: Notes panel + grid editing \u203a placing stitches after notes panel is opened still works",
+      "duration": 5.2,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
-      "file": "tests/e2e/cross-panel-data-flow.spec.ts",
-      "line": 350,
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 557,
       "col": 7,
-      "title": "Cross-panel data flow: Notes panel + grid editing \u203a placing stitches after notes panel is opened still works",
-      "duration": 5.1,
+      "title": "Undo after image conversion \u203a undo after dimension change following conversion restores original dimensions",
+      "duration": 6.0,
       "status": "passed",
       "error": null
     },
@@ -615,7 +637,7 @@
       "line": 615,
       "col": 7,
       "title": "Store Data Integrity \u203a store consistency: __testGridDesign matches store design",
-      "duration": 2.3,
+      "duration": 2.7,
       "status": "passed",
       "error": null
     },
@@ -625,27 +647,17 @@
       "line": 641,
       "col": 7,
       "title": "Store Data Integrity \u203a store consistency: design array is never null after init",
-      "duration": 2.3,
+      "duration": 2.4,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
       "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 499,
+      "line": 613,
       "col": 7,
-      "title": "Undo after image conversion \u203a undo/redo with notes survives conversion panel interaction",
-      "duration": 8.1,
-      "status": "failed",
-      "error": ""
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 554,
-      "col": 7,
-      "title": "Undo after image conversion \u203a undo after dimension change following conversion restores original dimensions",
-      "duration": 6.1,
+      "title": "Undo after image conversion \u203a undo stack remains consistent after conversion panel open\u2192close\u2192edit cycle",
+      "duration": 9.4,
       "status": "passed",
       "error": null
     },
@@ -655,29 +667,29 @@
       "line": 381,
       "col": 7,
       "title": "Edge case: large stitch counts and formatting \u203a placing many stitches does not crash or freeze",
-      "duration": 15.4,
+      "duration": 16.3,
       "status": "passed",
       "error": null
     },
     {
       "project": "full",
       "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 610,
-      "col": 7,
-      "title": "Undo after image conversion \u203a undo stack remains consistent after conversion panel open\u2192close\u2192edit cycle",
-      "duration": 9.5,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 666,
+      "line": 669,
       "col": 7,
       "title": "Undo after image conversion \u203a canceling conversion does not push an entry to undo stack",
-      "duration": 13.0,
-      "status": "failed",
-      "error": ""
+      "duration": 7.4,
+      "status": "passed",
+      "error": null
+    },
+    {
+      "project": "full",
+      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
+      "line": 709,
+      "col": 7,
+      "title": "Undo after image conversion \u203a undo after conversion flow preserves grid data integrity",
+      "duration": 7.8,
+      "status": "passed",
+      "error": null
     },
     {
       "project": "full",
@@ -685,17 +697,7 @@
       "line": 396,
       "col": 7,
       "title": "Edge case: large stitch counts and formatting \u203a undo/redo with many operations in stack works",
-      "duration": 24.1,
-      "status": "passed",
-      "error": null
-    },
-    {
-      "project": "full",
-      "file": "tests/e2e/image-conversion-undo-redo.spec.ts",
-      "line": 712,
-      "col": 7,
-      "title": "Undo after image conversion \u203a undo after conversion flow preserves grid data integrity",
-      "duration": 8.1,
+      "duration": 23.6,
       "status": "passed",
       "error": null
     },
@@ -705,7 +707,7 @@
       "line": 424,
       "col": 7,
       "title": "Edge case: concurrent panel interactions \u203a rapidly opening/closing panels preserves grid state",
-      "duration": 14.0,
+      "duration": 12.8,
       "status": "passed",
       "error": null
     },
@@ -715,10 +717,10 @@
       "line": 449,
       "col": 7,
       "title": "Edge case: concurrent panel interactions \u203a keyboard shortcuts during panel open do not conflict",
-      "duration": 6.0,
+      "duration": 5.7,
       "status": "passed",
       "error": null
     }
   ],
-  "elapsed": 141.12973809242249
+  "elapsed": 140.8443579673767
 }
